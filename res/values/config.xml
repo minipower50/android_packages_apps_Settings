@@ -39,4 +39,6 @@
          very long strings too. -->
     <integer name="maximum_user_dictionary_word_length" translatable="false">48</integer>
 
+    <!-- Volume rocker support. Some devices does not have volume rocker. -->
+    <bool name="has_volume_rocker">true</bool>
 </resources>

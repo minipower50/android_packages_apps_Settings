@@ -16,6 +16,8 @@
 
 package com.android.settings;
 
+import com.android.settings.Utils;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -200,6 +202,9 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         mVolBtnMusicCtrl = (CheckBoxPreference) findPreference(KEY_VOLBTN_MUSIC_CTRL);
         mVolBtnMusicCtrl.setChecked(Settings.System.getInt(resolver,
                 Settings.System.VOLBTN_MUSIC_CONTROLS, 1) != 0);
+        if (!Utils.hasVolumeRocker(getActivity())) {
+            getPreferenceScreen().removePreference(mVolBtnMusicCtrl);
+        }
 
         mRingtonePreference = findPreference(KEY_RINGTONE);
         mNotificationPreference = findPreference(KEY_NOTIFICATION_SOUND);
