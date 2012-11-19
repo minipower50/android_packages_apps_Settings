@@ -5048,4 +5048,6 @@
     <string name="gestures_action_search">Invoke search</string>
     <string name="gestures_action_recent">Recent applications</string>
 
+    <string name="edge_swipe_app">Launch application ...</string>
+
 </resources>

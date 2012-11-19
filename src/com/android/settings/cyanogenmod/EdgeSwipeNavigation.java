@@ -17,6 +17,7 @@
 package com.android.settings.cyanogenmod;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,24 +94,56 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
         int left = Settings.System.getInt(mContentResolver, GESTURE_ONE, 0);
         mEdgeSwipeLeft.setValue(String.valueOf(left));
         updateSummary(mEdgeSwipeLeft, left);
+        if (left == 7) {
+            try {
+                mEdgeSwipeLeft.setIcon(getActivity().getPackageManager().getActivityIcon(
+                        Intent.parseUri(Settings.System.getString(mContentResolver,
+                        Settings.System.GESTURE_APP_ONE), 0)));
+            } catch (Exception e) {
+            }
+        }
 
         mEdgeSwipeTop = (ListPreference) findPreference(GESTURE_TWO);
         mEdgeSwipeTop.setOnPreferenceChangeListener(this);
         int top = Settings.System.getInt(mContentResolver, GESTURE_TWO, 0);
         mEdgeSwipeTop.setValue(String.valueOf(top));
         updateSummary(mEdgeSwipeTop, top);
+        if (top == 7) {
+            try {
+                mEdgeSwipeTop.setIcon(getActivity().getPackageManager().getActivityIcon(
+                        Intent.parseUri(Settings.System.getString(mContentResolver,
+                        Settings.System.GESTURE_APP_TWO), 0)));
+            } catch (Exception e) {
+            }
+        }
 
         mEdgeSwipeRight = (ListPreference) findPreference(GESTURE_THREE);
         mEdgeSwipeRight.setOnPreferenceChangeListener(this);
         int right = Settings.System.getInt(mContentResolver, GESTURE_THREE, 0);
         mEdgeSwipeRight.setValue(String.valueOf(right));
         updateSummary(mEdgeSwipeRight, right);
+        if (right == 7) {
+            try {
+                mEdgeSwipeRight.setIcon(getActivity().getPackageManager().getActivityIcon(
+                        Intent.parseUri(Settings.System.getString(mContentResolver,
+                        Settings.System.GESTURE_APP_THREE), 0)));
+            } catch (Exception e) {
+            }
+        }
 
         mEdgeSwipeBottom = (ListPreference) findPreference(GESTURE_FOUR);
         mEdgeSwipeBottom.setOnPreferenceChangeListener(this);
         int bottom = Settings.System.getInt(mContentResolver, GESTURE_FOUR, 0);
         mEdgeSwipeBottom.setValue(String.valueOf(bottom));
         updateSummary(mEdgeSwipeBottom, bottom);
+        if (bottom == 7) {
+            try {
+                mEdgeSwipeBottom.setIcon(getActivity().getPackageManager().getActivityIcon(
+                        Intent.parseUri(Settings.System.getString(mContentResolver,
+                        Settings.System.GESTURE_APP_FOUR), 0)));
+            } catch (Exception e) {
+            }
+        }
 
         mGestureTypeOne = (ListPreference) findPreference(GESTURE_TYPE_ONE);
         mGestureTypeOne.setOnPreferenceChangeListener(this);
@@ -175,18 +208,58 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
             int value = Integer.parseInt((String) objValue);
             Settings.System.putInt(mContentResolver, GESTURE_FOUR, value);
             updateSummary(mEdgeSwipeBottom, value);
+            if (value == 7) {
+                // Pick an application
+                Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+                pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
+                startActivityForResult(pickIntent, 3);
+            } else {
+                mEdgeSwipeBottom.setIcon(null);
+            }
         } else if (preference == mEdgeSwipeTop) {
             int value = Integer.parseInt((String) objValue);
             Settings.System.putInt(mContentResolver, GESTURE_TWO, value);
             updateSummary(mEdgeSwipeTop, value);
+            if (value == 7) {
+                // Pick an application
+                Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+                pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
+                startActivityForResult(pickIntent, 1);
+            } else {
+                mEdgeSwipeTop.setIcon(null);
+            }
         } else if (preference == mEdgeSwipeRight) {
             int value = Integer.parseInt((String) objValue);
             Settings.System.putInt(mContentResolver, GESTURE_THREE, value);
             updateSummary(mEdgeSwipeRight, value);
+            if (value == 7) {
+                // Pick an application
+                Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+                pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
+                startActivityForResult(pickIntent, 2);
+            } else {
+                mEdgeSwipeRight.setIcon(null);
+            }
         } else if (preference == mEdgeSwipeLeft) {
             int value = Integer.parseInt((String) objValue);
             Settings.System.putInt(mContentResolver, GESTURE_ONE, value);
             updateSummary(mEdgeSwipeLeft, value);
+            if (value == 7) {
+                // Pick an application
+                Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+                pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
+                startActivityForResult(pickIntent, 0);
+            } else {
+                mEdgeSwipeLeft.setIcon(null);
+            }
         } else if (preference == mGestureTypeOne) {
             int value = Integer.parseInt((String) objValue);
             Settings.System.putInt(mContentResolver, GESTURE_TYPE_ONE, value);
@@ -260,6 +333,51 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
         }, 500);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+         mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Settings.System.putInt(mContentResolver, Settings.System.SHOW_GESTURES, 0);
+            }
+        }, 500);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            switch (requestCode) {
+                case 0:
+                    Settings.System.putString(mContentResolver, Settings.System.GESTURE_APP_ONE, data.toUri(0));
+                    try {
+                        mEdgeSwipeLeft.setIcon(getActivity().getPackageManager().getActivityIcon(data));
+                    } catch (Exception e) {
+                    }
+                    break;
+                case 1:
+                    Settings.System.putString(mContentResolver, Settings.System.GESTURE_APP_TWO, data.toUri(0));
+                    try {
+                        mEdgeSwipeTop.setIcon(getActivity().getPackageManager().getActivityIcon(data));
+                    } catch (Exception e) {
+                    }
+                    break;
+                case 2:
+                    Settings.System.putString(mContentResolver, Settings.System.GESTURE_APP_THREE, data.toUri(0));
+                    try {
+                        mEdgeSwipeRight.setIcon(getActivity().getPackageManager().getActivityIcon(data));
+                    } catch (Exception e) {
+                    }
+                    break;
+                case 3:
+                    Settings.System.putString(mContentResolver, Settings.System.GESTURE_APP_FOUR, data.toUri(0));
+                    try {
+                        mEdgeSwipeBottom.setIcon(getActivity().getPackageManager().getActivityIcon(data));
+                    } catch (Exception e) {
+                    }
+                    break;
+            }
+        }
+    }
 
 }
