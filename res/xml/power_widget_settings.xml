@@ -21,6 +21,10 @@
             android:key="expanded_volume"
             android:title="@string/title_expanded_volume" />
 
+        <CheckBoxPreference
+            android:key="expanded_brightness"
+            android:title="@string/title_expanded_brightness" />
+
     <!-- Notification drawer Power Widget -->
     <PreferenceCategory
        android:title="@string/power_widget_title">

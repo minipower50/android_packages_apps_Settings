@@ -62,6 +62,7 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private static final String UI_EXP_WIDGET_HIDE_SCROLLBAR = "expanded_hide_scrollbar";
     private static final String UI_EXP_WIDGET_HAPTIC_FEEDBACK = "expanded_haptic_feedback";
 
+    private static final String UI_EXP_BRIGHTNESS = "expanded_brightness";
     private static final String UI_EXP_VOLUME = "expanded_volume";
 
     private CheckBoxPreference mPowerWidget;
@@ -70,6 +71,7 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private ListPreference mPowerWidgetHapticFeedback;
 
     private CheckBoxPreference mVolume;
+    private CheckBoxPreference mBrightness;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,10 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mVolume = (CheckBoxPreference) prefSet.findPreference(UI_EXP_VOLUME);
             mVolume.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
                     .getContentResolver(), Settings.System.PHONE_STATUS_BAR_VOLUME, 0) == 1));
+
+            mBrightness = (CheckBoxPreference) prefSet.findPreference(UI_EXP_BRIGHTNESS);
+            mBrightness.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
+                    .getContentResolver(), Settings.System.PHONE_STATUS_BAR_BRIGHTNESS, 0) == 1));
         }
     }
 
@@ -144,6 +150,10 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             value = mVolume.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PHONE_STATUS_BAR_VOLUME, value ? 1 : 0);
+        } else if (preference == mBrightness) {
+            value = mBrightness.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PHONE_STATUS_BAR_BRIGHTNESS, value ? 1 : 0);
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);

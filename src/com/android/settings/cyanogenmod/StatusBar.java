@@ -57,6 +57,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_CLOCK_CLICK = "status_bar_clock_click";
     private static final String PHONE_STYLE_RECENTS = "phone_style_recents";
     private static final String UMS_NOTIFICATION_CONNECT = "ums_notification_connect";
+    private static final String RECENTS_PANEL_COLOR = "recents_panel_color";
 
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
@@ -76,6 +77,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mClockClick;
     private CheckBoxPreference mPhoneStyleRecents;
     private CheckBoxPreference mUmsNotification;
+    private Preference mRecentsPanelColor;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -117,6 +119,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mStatusBarColor = (Preference) prefSet.findPreference(STATUS_BAR_COLOR);
         mNotificationPanelColor = (Preference) prefSet.findPreference(NOTIFICATION_PANEL_COLOR);
+        mRecentsPanelColor = (Preference) prefSet.findPreference(RECENTS_PANEL_COLOR);
     }
 
     public void onResume() {
@@ -320,6 +323,14 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(mContentResolver,
                     Settings.System.UMS_NOTIFICATION_CONNECT, value ? 1 : 0);
             return true;
+        } else if (preference == mRecentsPanelColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mRecentsPanelColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.RECENTS_PANEL_COLOR, 0xC0000000));
+            cp.setDefaultColor(0xC0000000);
+            cp.show();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -349,6 +360,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.NOTIFICATION_PANEL_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mRecentsPanelColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.RECENTS_PANEL_COLOR, color);
             }
             public void colorUpdate(int color) {
             }
