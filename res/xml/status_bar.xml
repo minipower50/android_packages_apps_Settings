@@ -27,6 +27,11 @@
         android:title="@string/status_bar_shared_title">
 
         <CheckBoxPreference
+            android:key="hide_lights_out"
+            android:title="@string/combined_bar_hide_lights_out_title"
+            android:summary="@string/combined_bar_hide_lights_out_summary" />
+
+        <CheckBoxPreference
             android:key="combined_bar_auto_hide"
             android:title="@string/combined_bar_auto_hide_title"
             android:summary="@string/combined_bar_auto_hide_summary" />
@@ -47,11 +52,6 @@
             android:title="@string/notification_panel_color_title">
         </PreferenceScreen>
 
-        <PreferenceScreen
-            android:key="recents_panel_color"
-            android:title="@string/recents_panel_color_title">
-        </PreferenceScreen>
-
         <ListPreference
             android:key="status_bar_battery"
             android:dialogTitle="@string/status_bar_battery_title"
@@ -63,27 +63,6 @@
             android:key="status_bar_notif_count"
             android:title="@string/status_bar_notif_count_title"
             android:summary="@string/status_bar_notif_count_summary" />
-
-       <CheckBoxPreference
-            android:key="status_bar_show_clock"
-            android:title="@string/status_bar_show_clock_title" />
-
-        <ListPreference
-            android:key="status_bar_am_pm"
-            android:dialogTitle="@string/status_bar_am_pm_title"
-            android:title="@string/status_bar_am_pm_title"
-            android:entries="@array/entries_status_bar_am_pm"
-            android:entryValues="@array/values_status_bar_am_pm" />
-
-        <PreferenceScreen
-            android:key="status_bar_clock_color"
-            android:title="@string/status_bar_clock_color_title">
-        </PreferenceScreen>
-
-       <CheckBoxPreference
-            android:key="status_bar_clock_click"
-            android:title="@string/status_bar_clock_click_title"
-            android:summary="@string/status_bar_clock_click_summary" />
 
        <CheckBoxPreference
             android:key="ums_notification_connect"
@@ -121,10 +100,6 @@
         <CheckBoxPreference
             android:key="tablet_ui"
             android:title="@string/tablet_ui_title" />
-
-        <CheckBoxPreference
-            android:key="phone_style_recents"
-            android:title="@string/phone_style_recents_title" />
 
     </PreferenceCategory>
 

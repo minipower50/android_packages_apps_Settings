@@ -48,6 +48,8 @@ public class NavControl extends SettingsPreferenceFragment {
 
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
 
+    private static final String HOME_BUTTON_SEARCH = "home_button_search";
+
     private CheckBoxPreference mNavigationControls;
     private CheckBoxPreference mCombinedBarNavigationForceMenu;
     private CheckBoxPreference mCombinedBarNavigationGlow;
@@ -55,6 +57,8 @@ public class NavControl extends SettingsPreferenceFragment {
     private Preference mCombinedBarNavigationGlowColor;
     private Preference mCombinedBarNavigationColor;
     private Preference mNavigationBarColor;
+
+    private CheckBoxPreference mHomeButtonSearch;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -82,6 +86,7 @@ public class NavControl extends SettingsPreferenceFragment {
                 (Preference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_COLOR);
         mNavigationControls = (CheckBoxPreference) findPreference(KEY_NAVIGATION_CONTROLS);
         mNavigationBarColor = (Preference) prefSet.findPreference(NAVIGATION_BAR_COLOR);
+        mHomeButtonSearch = (CheckBoxPreference) prefSet.findPreference(HOME_BUTTON_SEARCH);
 
         mCombinedBarNavigationForceMenu.setChecked((Settings.System.getInt(mContentResolver,
                 Settings.System.FORCE_SOFT_MENU_BUTTON, 0) == 1));
@@ -92,6 +97,8 @@ public class NavControl extends SettingsPreferenceFragment {
         mCombinedBarNavigationQuickGlow.setChecked((Settings.System.getInt(mContentResolver,
                 Settings.System.COMBINED_BAR_NAVIGATION_GLOW_TIME, 0) == 1));
 
+        mHomeButtonSearch.setChecked(Settings.System.getInt(mContentResolver,
+                Settings.System.HOME_BUTTON_SEARCH, 1) == 1);
 
         boolean tabletMode = Settings.System.getInt(mContentResolver,
                         Settings.System.TABLET_MODE, 0) > 0;
@@ -157,6 +164,11 @@ public class NavControl extends SettingsPreferenceFragment {
                     .getContentResolver(), Settings.System.NAVIGATION_BAR_COLOR, 0xFF000000));
             cp.setDefaultColor(0xFF000000);
             cp.show();
+            return true;
+        } else if (preference == mHomeButtonSearch) {
+            value = mHomeButtonSearch.isChecked();
+            Settings.System.putInt(mContentResolver,
+                    Settings.System.HOME_BUTTON_SEARCH, value ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

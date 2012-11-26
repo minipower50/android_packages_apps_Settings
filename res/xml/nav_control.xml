@@ -22,6 +22,10 @@
             android:key="navigation_controls"
             android:title="@string/navigation_controls_title" />
 
+        <CheckBoxPreference
+            android:key="home_button_search"
+            android:title="@string/home_button_search_title" />
+
         <PreferenceScreen
             android:key="navigation_bar"
             android:fragment="com.android.settings.cyanogenmod.NavBar"
