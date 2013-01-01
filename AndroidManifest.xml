@@ -1104,7 +1104,7 @@
         <activity android:name="ChooseLockPassword" android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustResize"/>
 
-        <!-- Anonymous Statistics -->
+        <!-- Anonymous Statistics
         <receiver android:name=".cmstats.ReportingServiceManager"
             android:enabled="true"
             android:exported="false"
@@ -1119,7 +1119,7 @@
             android:enabled="true"
             android:exported="false"
             android:name=".cmstats.ReportingService">
-        </service>
+        </service> -->
 
         <!-- Runs in the phone process since it needs access to the Phone object -->
         <activity android:name=".deviceinfo.Status"

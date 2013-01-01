@@ -40,7 +40,7 @@
                     android:targetClass="com.android.settings.deviceinfo.Status" />
         </PreferenceScreen>
 
-        <!-- CyanogenMod Updates -->
+        <!-- CyanogenMod Updates
         <PreferenceScreen android:key="cm_updates"
                 android:title="@string/cmupdate_settings_title" 
                 android:summary="@string/cmupdate_settings_summary">
@@ -49,13 +49,13 @@
                     android:targetClass="com.cyanogenmod.updater.UpdatesSettings" />
         </PreferenceScreen>
 
-        <!-- Anonymous statistics - (CMStats) -->
+        Anonymous statistics - (CMStats)
         <PreferenceScreen
             android:key="cmstats"
             android:title="@string/anonymous_statistics_title"
             android:summary="@string/anonymous_statistics_summary"
             android:fragment="com.android.settings.cmstats.AnonymousStats" >
-        </PreferenceScreen>
+        </PreferenceScreen> -->
 
         <!-- Change Log -->
         <PreferenceScreen android:key="changelog"
