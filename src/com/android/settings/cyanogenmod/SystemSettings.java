@@ -93,14 +93,14 @@ public class SystemSettings extends SettingsPreferenceFragment {
             if (removeKeys) {
                 prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
             }
-            if (removeNavbar) {
-                prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
-            }
+            //if (removeNavbar) {
+            //    prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
+            //}
         } else {
             // Secondary user is logged in, remove all primary user specific preferences
             prefScreen.removePreference(findPreference(KEY_BATTERY_LIGHT));
             prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
-            prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
+            //prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
             prefScreen.removePreference(findPreference(KEY_STATUS_BAR));
             prefScreen.removePreference(findPreference(KEY_QUICK_SETTINGS));
             prefScreen.removePreference(findPreference(KEY_POWER_MENU));
@@ -182,10 +182,12 @@ public class SystemSettings extends SettingsPreferenceFragment {
         super.onResume();
 
         // All users
-        updateLightPulseDescription();
+        if (mNotificationPulse != null) {
+            updateLightPulseDescription();
+        }
 
         // Primary user only
-        if (mIsPrimary) {
+        if (mIsPrimary && mBatteryPulse != null) {
             updateBatteryPulseDescription();
         }
     }
