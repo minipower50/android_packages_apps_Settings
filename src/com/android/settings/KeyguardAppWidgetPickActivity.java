@@ -116,7 +116,7 @@ public class KeyguardAppWidgetPickActivity extends Activity
         }
         mAppWidgetManager = AppWidgetManager.getInstance(this);
         mAppWidgetLoader = new AppWidgetLoader<Item>(this, mAppWidgetManager, this);
-        mItems = mAppWidgetLoader.getItems(getIntent(), false);
+        mItems = mAppWidgetLoader.getItems(getIntent());
         mAppWidgetAdapter = new AppWidgetAdapter(this, mItems);
         mGridView.setAdapter(mAppWidgetAdapter);
         mGridView.setOnItemClickListener(this);
@@ -126,7 +126,7 @@ public class KeyguardAppWidgetPickActivity extends Activity
         showAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mItems = mAppWidgetLoader.getItems(getIntent(), true);
+                mItems = mAppWidgetLoader.getItems(getIntent());
                 mAppWidgetAdapter = new AppWidgetAdapter(getBaseContext(), mItems);
                 mGridView.setAdapter(mAppWidgetAdapter);
                 showAll.setEnabled(false);
