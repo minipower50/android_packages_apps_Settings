@@ -1332,4 +1332,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="nav_alignment_entries">
+        <item>@string/center</item>
+        <item>@string/right</item>
+        <item>@string/left</item>
+    </string-array>
+
+    <string-array name="nav_alignment_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

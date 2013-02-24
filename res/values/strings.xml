@@ -5225,4 +5225,12 @@
 
     <string name="large_recent_thumbs_title">Large recent thumbnails</string>
     <string name="large_recent_thumbs_summary">Show larger recent application thumbnails</string>
+
+    <string name="center">Center</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
+
+    <string name="nav_alignment">Navigation alignment</string>
+    <string name="nav_alignment_summary">Align the navigation buttons to the center, right, or left</string>
+
 </resources>

@@ -53,6 +53,11 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mDualPanePrefs = (ListPreference) prefSet.findPreference(DUAL_PANE_PREFS);
         mDualPanePrefs.setOnPreferenceChangeListener(this);
+        boolean preferMultiPane = getResources().getBoolean(
+                com.android.internal.R.bool.preferences_prefer_dual_pane);
+        int dualPane = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.DUAL_PANE_PREFS, preferMultiPane ? 1 : 0);
+        mDualPanePrefs.setValue(String.valueOf(dualPane));
 
         mUmsNotificationConnect = (CheckBoxPreference) prefSet.findPreference(UMS_NOTIFICATION_CONNECT);
 

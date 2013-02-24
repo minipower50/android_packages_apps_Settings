@@ -21,7 +21,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -33,7 +35,7 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-public class NavControl extends SettingsPreferenceFragment {
+public class NavControl extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
 //    private static final String NAVIGATION_BAR_COLOR = "navigation_bar_color";
     private static final String KEY_NAVIGATION_CONTROLS = "navigation_controls";
@@ -48,9 +50,12 @@ public class NavControl extends SettingsPreferenceFragment {
     private static final String HOME_BUTTON_SEARCH = "home_button_search";
 */
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
+    private static final String KEY_NAVIGATION_ALIGNMENT = "nav_alignment";
 
     private CheckBoxPreference mNavigationControls;
     private CheckBoxPreference mCombinedBarNavigationForceMenu;
+    private ListPreference mNavigationAlignment;
+
 /*    private CheckBoxPreference mCombinedBarNavigationGlow;
     private CheckBoxPreference mCombinedBarNavigationQuickGlow;
     private Preference mCombinedBarNavigationGlowColor;
@@ -98,6 +103,13 @@ public class NavControl extends SettingsPreferenceFragment {
         mHomeButtonSearch.setChecked(Settings.System.getInt(mContentResolver,
                 Settings.System.HOME_BUTTON_SEARCH, 1) == 1);
 */
+        mNavigationAlignment =
+                (ListPreference) prefSet.findPreference(KEY_NAVIGATION_ALIGNMENT);
+        mNavigationAlignment.setOnPreferenceChangeListener(this);
+        int navAlign = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.NAVIGATION_ALIGNMENT, 0);
+        mNavigationAlignment.setValue(String.valueOf(navAlign));
+
         boolean tabletMode = Settings.System.getInt(mContentResolver,
                         Settings.System.TABLET_MODE, 0) > 0;
 
@@ -110,6 +122,7 @@ public class NavControl extends SettingsPreferenceFragment {
         } else {
             Preference naviBar = findPreference(KEY_NAVIGATION_BAR);
             prefSet.removePreference(naviBar);
+            prefSet.removePreference(mNavigationAlignment);
         }
     }
 
@@ -170,6 +183,17 @@ public class NavControl extends SettingsPreferenceFragment {
         }*/
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mNavigationAlignment) {
+            String newVal = (String) newValue;
+            int index = mNavigationAlignment.findIndexOfValue(newVal);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NAVIGATION_ALIGNMENT, index);
+        }
+        return true;
+    }
+
 /*
     ColorPickerDialog.OnColorChangedListener mButtonColorListener =
         new ColorPickerDialog.OnColorChangedListener() {

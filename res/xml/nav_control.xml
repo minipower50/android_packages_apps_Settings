@@ -33,6 +33,14 @@
             android:title="@string/combined_bar_navigation_force_menu_title"
             android:dependency="navigation_controls" />
 
+        <ListPreference
+            android:key="nav_alignment"
+            android:title="@string/nav_alignment"
+            android:summary="@string/nav_alignment_summary"
+            android:dependency="navigation_controls"
+            android:entries="@array/nav_alignment_entries"
+            android:entryValues="@array/nav_alignment_values" />
+
 <!--
         <CheckBoxPreference
             android:key="home_button_search"
