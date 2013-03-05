@@ -41,6 +41,12 @@
             android:entries="@array/nav_alignment_entries"
             android:entryValues="@array/nav_alignment_values" />
 
+        <PreferenceScreen
+            android:key="navigation_ring"
+            android:fragment="com.android.settings.cyanogenmod.NavRing"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_ring_title" />
+
 <!--
         <CheckBoxPreference
             android:key="home_button_search"

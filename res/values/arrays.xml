@@ -1307,6 +1307,7 @@
         <item>@string/edge_swipe_menu</item>
         <item>@string/edge_swipe_app</item>
         <item>@string/edge_swipe_recents</item>
+        <item>@string/edge_swipe_app_drawer</item>
     </string-array>
 
     <string-array name="edge_swipe_values" translatable="false">
@@ -1319,6 +1320,7 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
     </string-array>
 
     <string-array name="gesture_type_entries">
