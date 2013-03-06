@@ -5198,8 +5198,10 @@
     <string name="navring_choose_action_title">Choose action</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
-    <string name="keyguard_picker_all_widgets_title">Show all widgets</string>
     <string name="navigation_controls_title">Navigation buttons</string>
+
+    <string name="lockscreen_all_widgets_title">Show all widgets in lockscreen</string>
+    <string name="lockscreen_widget_frame_title">Show widget frame in lockscreen</string>
     <string name="lockscreen_camera_widget_title">Camera widget</string>
 
     <string name="status_bar_tablet_title">Tablet Tweaks</string>

@@ -60,6 +60,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
 
+    private static final String KEY_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
+    private static final String KEY_LOCKSCREEN_WIDGET_FRAME = "lockscreen_widget_frame";
     private static final String KEY_LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
 
     private static final String KEY_BACKGROUND = "lockscreen_background";
@@ -68,6 +70,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mMaximizeWidgets;
+    private CheckBoxPreference mAllWidgets;
+    private CheckBoxPreference mWidgetFrame;
     private CheckBoxPreference mCameraWidget;
     private File mWallpaperImage;
     private File mWallpaperTemporary;
@@ -138,6 +142,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_COLOR_FILL);
         }
         mCustomBackground.setSummary(getResources().getString(resId));
+        mAllWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ALL_WIDGETS);
+        mAllWidgets.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.KG_ALL_WIDGETS, 0) == 1);
+        mWidgetFrame = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_WIDGET_FRAME);
+        mWidgetFrame.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.KG_HIDE_OUTLINE, 0) == 0);
         mCameraWidget = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_CAMERA_WIDGET);
         mCameraWidget.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.KG_CAMERA_WIDGET, 0) == 1);
@@ -214,6 +224,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         if (preference == mCameraWidget) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.KG_CAMERA_WIDGET, mCameraWidget.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mAllWidgets) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.KG_ALL_WIDGETS, mAllWidgets.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mWidgetFrame) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.KG_HIDE_OUTLINE, mWidgetFrame.isChecked() ? 0 : 1);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
