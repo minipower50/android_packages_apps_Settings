@@ -47,6 +47,24 @@
             android:dependency="navigation_controls"
             android:title="@string/navigation_ring_title" />
 
+        <PreferenceScreen
+            android:key="navigation_button_color"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_button_color_title">
+        </PreferenceScreen>
+
+        <com.android.settings.cyanogenmod.SeekBarPreference
+            android:key="navigation_button_glow_time"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_button_glow_time_title"
+            android:max="500"
+            android:defaultValue="500" />
+
+        <PreferenceScreen
+            android:key="navigation_button_glow_color"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_button_glow_color_title">
+        </PreferenceScreen>
 <!--
         <CheckBoxPreference
             android:key="home_button_search"

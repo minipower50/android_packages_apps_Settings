@@ -37,33 +37,30 @@ import com.android.settings.Utils;
 
 public class NavControl extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
-//    private static final String NAVIGATION_BAR_COLOR = "navigation_bar_color";
+    private static final String NAVIGATION_BUTTON_COLOR = "navigation_button_color";
     private static final String KEY_NAVIGATION_CONTROLS = "navigation_controls";
     private static final String COMBINED_BAR_NAVIGATION_FORCE_MENU =
             "combined_bar_navigation_force_menu";
-/*    private static final String COMBINED_BAR_NAVIGATION_COLOR = "combined_bar_navigation_color";
-    private static final String COMBINED_BAR_NAVIGATION_GLOW = "combined_bar_navigation_glow";
-    private static final String COMBINED_BAR_NAVIGATION_GLOW_COLOR =
-            "combined_bar_navigation_glow_color";
-    private static final String COMBINED_BAR_NAVIGATION_QUICK_GLOW =
-            "combined_bar_navigation_quick_glow";
-    private static final String HOME_BUTTON_SEARCH = "home_button_search";
-*/
+    private static final String NAVIGATION_BUTTON_GLOW_COLOR = "navigation_button_glow_color";
+    private static final String NAVIGATION_BUTTON_GLOW_TIME =
+            "navigation_button_glow_time";
+    //private static final String COMBINED_BAR_NAVIGATION_COLOR = "combined_bar_navigation_color";
+    //private static final String HOME_BUTTON_SEARCH = "home_button_search";
+
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_NAVIGATION_ALIGNMENT = "nav_alignment";
 
     private CheckBoxPreference mNavigationControls;
     private CheckBoxPreference mCombinedBarNavigationForceMenu;
     private ListPreference mNavigationAlignment;
+    private Preference mNavigationButtonColor;
+    private Preference mNavigationButtonGlowColor;
+    private SeekBarPreference mNavigationButtonGlowTime;
 
-/*    private CheckBoxPreference mCombinedBarNavigationGlow;
-    private CheckBoxPreference mCombinedBarNavigationQuickGlow;
-    private Preference mCombinedBarNavigationGlowColor;
-    private Preference mCombinedBarNavigationColor;
-    private Preference mNavigationBarColor;
+    //private Preference mNavigationBarColor;
 
-    private CheckBoxPreference mHomeButtonSearch;
-*/
+    //private CheckBoxPreference mHomeButtonSearch;
+
     private ContentResolver mContentResolver;
     private Context mContext;
 
@@ -80,25 +77,14 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
 
         mCombinedBarNavigationForceMenu =
                 (CheckBoxPreference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_FORCE_MENU);
-/*        mCombinedBarNavigationGlow =
-                (CheckBoxPreference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_GLOW);
-        mCombinedBarNavigationQuickGlow =
-                (CheckBoxPreference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_QUICK_GLOW);
-        mCombinedBarNavigationGlowColor =
-                (Preference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_GLOW_COLOR);
-        mCombinedBarNavigationColor =
-                (Preference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_COLOR);*/
+
         mNavigationControls = (CheckBoxPreference) findPreference(KEY_NAVIGATION_CONTROLS);
+
         mCombinedBarNavigationForceMenu.setChecked((Settings.System.getInt(mContentResolver,
                 Settings.System.TABLET_FORCE_MENU, 0) == 1));
+
 /*        mNavigationBarColor = (Preference) prefSet.findPreference(NAVIGATION_BAR_COLOR);
         mHomeButtonSearch = (CheckBoxPreference) prefSet.findPreference(HOME_BUTTON_SEARCH);
-
-        mCombinedBarNavigationGlow.setChecked((Settings.System.getInt(mContentResolver,
-                Settings.System.COMBINED_BAR_NAVIGATION_GLOW, 1) == 1));
-
-        mCombinedBarNavigationQuickGlow.setChecked((Settings.System.getInt(mContentResolver,
-                Settings.System.COMBINED_BAR_NAVIGATION_GLOW_TIME, 0) == 1));
 
         mHomeButtonSearch.setChecked(Settings.System.getInt(mContentResolver,
                 Settings.System.HOME_BUTTON_SEARCH, 1) == 1);
@@ -109,6 +95,18 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
         int navAlign = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.NAVIGATION_ALIGNMENT, 0);
         mNavigationAlignment.setValue(String.valueOf(navAlign));
+
+        mNavigationButtonColor =
+                (Preference) prefSet.findPreference(NAVIGATION_BUTTON_COLOR);
+
+        mNavigationButtonGlowColor =
+                (Preference) prefSet.findPreference(NAVIGATION_BUTTON_GLOW_COLOR);
+
+        mNavigationButtonGlowTime =
+                (SeekBarPreference) prefSet.findPreference(NAVIGATION_BUTTON_GLOW_TIME);
+        mNavigationButtonGlowTime.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.NAVIGATION_BUTTON_GLOW_TIME, 500));
+        mNavigationButtonGlowTime.setOnPreferenceChangeListener(this);
 
         boolean tabletMode = Settings.System.getInt(mContentResolver,
                         Settings.System.TABLET_MODE, 0) > 0;
@@ -138,6 +136,24 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
             value = mCombinedBarNavigationForceMenu.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.TABLET_FORCE_MENU, value ? 1 : 0);
+            return true;
+        } else if (preference == mNavigationButtonColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mButtonColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.NAVIGATION_BUTTON_COLOR,
+                    getActivity().getApplicationContext().getResources().getColor(
+                    com.android.internal.R.color.transparent)));
+            cp.setDefaultColor(0x00000000);
+            cp.show();
+            return true;
+        } else if (preference == mNavigationButtonGlowColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mGlowColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.NAVIGATION_BUTTON_GLOW_COLOR,
+                    getActivity().getApplicationContext().getResources().getColor(
+                    com.android.internal.R.color.transparent)));
+            cp.setDefaultColor(0x00000000);
+            cp.show();
             return true;
         }/* else if (preference == mCombinedBarNavigationGlow) {
             value = mCombinedBarNavigationGlow.isChecked();
@@ -190,16 +206,20 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
             int index = mNavigationAlignment.findIndexOfValue(newVal);
             Settings.System.putInt(getContentResolver(),
                     Settings.System.NAVIGATION_ALIGNMENT, index);
+        } else if (preference == mNavigationButtonGlowTime) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NAVIGATION_BUTTON_GLOW_TIME, value);
         }
         return true;
     }
 
-/*
+
     ColorPickerDialog.OnColorChangedListener mButtonColorListener =
         new ColorPickerDialog.OnColorChangedListener() {
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
-                        Settings.System.COMBINED_BAR_NAVIGATION_COLOR, color);
+                        Settings.System.NAVIGATION_BUTTON_COLOR, color);
             }
             public void colorUpdate(int color) {
             }
@@ -209,12 +229,12 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
         new ColorPickerDialog.OnColorChangedListener() {
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
-                        Settings.System.COMBINED_BAR_NAVIGATION_GLOW_COLOR, color);
+                        Settings.System.NAVIGATION_BUTTON_GLOW_COLOR, color);
             }
             public void colorUpdate(int color) {
             }
     };
-
+/*
     ColorPickerDialog.OnColorChangedListener mNavigationBarColorListener =
         new ColorPickerDialog.OnColorChangedListener() {
             public void colorChanged(int color) {

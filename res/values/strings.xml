@@ -5260,4 +5260,8 @@
     <string name="nav_alignment">Navigation alignment</string>
     <string name="nav_alignment_summary">Align the navigation buttons to the center, right, or left</string>
 
+    <string name="navigation_button_color_title">Navigation button color</string>
+    <string name="dialog_indicator_color_title">Select color</string>
+    <string name="navigation_button_glow_color_title">Navigation button glow color</string>
+    <string name="navigation_button_glow_time_title">Navigation button glow time</string>
 </resources>
