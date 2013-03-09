@@ -124,15 +124,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mTabletUI = (CheckBoxPreference) findPreference(KEY_TABLET_UI);
         mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
-                        Settings.System.TABLET_MODE, 0) == 1);
+                Settings.System.TABLET_MODE, mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_showTabletNavigationBar) ? 1 : 0) == 1);
 
         mTabletFlipped = (CheckBoxPreference) findPreference(KEY_TABLET_FLIPPED);
         mTabletFlipped.setChecked(Settings.System.getInt(mContentResolver,
-                        Settings.System.TABLET_FLIPPED, 0) == 1);
+                Settings.System.TABLET_FLIPPED, 0) == 1);
 
         mStatusBarLightsOut = (CheckBoxPreference) prefSet.findPreference(KEY_STATUS_BAR_LIGHTS_OUT);
         mStatusBarLightsOut.setChecked(Settings.System.getInt(mContentResolver,
-                        Settings.System.HIDE_SB_LIGHTS_OUT, 0) == 1);
+                Settings.System.HIDE_SB_LIGHTS_OUT, 0) == 1);
 
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 

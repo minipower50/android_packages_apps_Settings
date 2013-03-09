@@ -109,7 +109,8 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
         mNavigationButtonGlowTime.setOnPreferenceChangeListener(this);
 
         boolean tabletMode = Settings.System.getInt(mContentResolver,
-                        Settings.System.TABLET_MODE, 0) > 0;
+                Settings.System.TABLET_MODE, mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_showTabletNavigationBar) ? 1 : 0) == 1;
 
         mNavigationControls.setChecked(Settings.System.getInt(mContentResolver,
                 Settings.System.NAVIGATION_CONTROLS, mContext.getResources().getBoolean(
