@@ -46,6 +46,8 @@ public class SystemSettings extends SettingsPreferenceFragment {
     private static final String KEY_QUICK_SETTINGS = "quick_settings_panel";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_POWER_MENU = "power_menu";
+    private static final String KEY_NAVIGATION_CONTROL = "navigation_control";
+    private static final String KEY_USER_INTERFACE = "user_interface";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -102,6 +104,8 @@ public class SystemSettings extends SettingsPreferenceFragment {
             prefScreen.removePreference(findPreference(KEY_QUICK_SETTINGS));
             prefScreen.removePreference(findPreference(KEY_POWER_MENU));
             prefScreen.removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
+            prefScreen.removePreference(findPreference(KEY_NAVIGATION_CONTROL));
+            prefScreen.removePreference(findPreference(KEY_USER_INTERFACE));
         }
 
         // Preferences that applies to all users
