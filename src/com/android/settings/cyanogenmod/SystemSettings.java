@@ -48,10 +48,14 @@ public class SystemSettings extends SettingsPreferenceFragment {
     private static final String KEY_POWER_MENU = "power_menu";
     private static final String KEY_NAVIGATION_CONTROL = "navigation_control";
     private static final String KEY_USER_INTERFACE = "user_interface";
+    private static final String KEY_BAR_SETTINGS = "combined_bar_settings";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
     private boolean mIsPrimary;
+    private PreferenceScreen mBarSettings;
+    private PreferenceScreen mQuickSettings;
+    private PreferenceScreen mNotificationPanel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
             if (removeKeys) {
                 prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
             }
+
             //if (removeNavbar) {
             //    prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
             //}
@@ -106,6 +111,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
             prefScreen.removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
             prefScreen.removePreference(findPreference(KEY_NAVIGATION_CONTROL));
             prefScreen.removePreference(findPreference(KEY_USER_INTERFACE));
+            prefScreen.removePreference(mBarSettings);
         }
 
         // Preferences that applies to all users
@@ -153,6 +159,22 @@ public class SystemSettings extends SettingsPreferenceFragment {
         // Primary user only
         if (mIsPrimary && mBatteryPulse != null) {
             updateBatteryPulseDescription();
+        }
+
+        mBarSettings = (PreferenceScreen) findPreference(KEY_BAR_SETTINGS);
+        mQuickSettings = (PreferenceScreen) findPreference(KEY_QUICK_SETTINGS);
+        mNotificationPanel = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
+
+        boolean tabletMode = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.TABLET_MODE,
+                getActivity().getApplicationContext().getResources().getBoolean(
+                com.android.internal.R.bool.config_showTabletNavigationBar) ? 1 : 0) == 1;
+
+        if (!tabletMode && mBarSettings != null) {
+            getPreferenceScreen().removePreference(mBarSettings);
+        } else if (tabletMode) {
+            if (mQuickSettings != null) getPreferenceScreen().removePreference(mQuickSettings);
+            if (mNotificationPanel != null) getPreferenceScreen().removePreference(mNotificationPanel);
         }
     }
 

@@ -5264,4 +5264,22 @@
     <string name="dialog_indicator_color_title">Select color</string>
     <string name="navigation_button_glow_color_title">Navigation button glow color</string>
     <string name="navigation_button_glow_time_title">Navigation button glow time</string>
+
+    <!-- Settings panel  -->
+    <string name="settings_panel_title">Settings panel</string>
+
+    <!-- Combined Bar #CM -->
+    <string name="combined_bar_settings_title">Notification panel settings</string>
+    <string name="combined_bar_settings_picker_title">Settings entries</string>
+    <string name="combined_bar_settings_order_title">Settings order</string>
+    <string name="combined_bar_settings_wifi">Wi-Fi switch</string>
+    <string name="combined_bar_settings_bluetooth">Bluetooth switch</string>
+    <string name="combined_bar_settings_volume">Volume slider</string>
+    <string name="combined_bar_settings_brightness">Brightness slider</string>
+    <string name="combined_bar_settings_notifications">Notifications switch</string>
+    <string name="combined_bar_settings_shortcut">Settings shortcut</string>
+    <string name="combined_bar_settings_autorotate">Auto-rotate screen switch</string>
+    <string name="combined_bar_settings_airplane">Airplane mode switch</string>
+    <string name="combined_bar_settings_media">Media control</string>
+    <string name="combined_bar_settings_sleep">Sleep selector</string>
 </resources>
