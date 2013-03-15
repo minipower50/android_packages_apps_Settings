@@ -29,8 +29,6 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
-import android.view.Display;
-import android.view.IWindowManager;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -47,6 +45,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
     private static final String KEY_TABLET_UI = "tablet_ui";
     private static final String KEY_TABLET_FLIPPED = "tablet_flipped";
+    private static final String KEY_TABLET_SCALED_ICONS = "tablet_scaled_icons";
     private static final String KEY_STATUS_BAR_LIGHTS_OUT = "status_bar_lights_out";
 
     private ListPreference mStatusBarAmPm;
@@ -58,7 +57,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceCategory mPrefCategoryGeneral;
     private CheckBoxPreference mTabletUI;
     private CheckBoxPreference mTabletFlipped;
+    private CheckBoxPreference mTabletScaledIcons;
     private CheckBoxPreference mStatusBarLightsOut;
+
+    private Preference mClockColor;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -137,6 +139,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mTabletFlipped.setChecked(Settings.System.getInt(mContentResolver,
                 Settings.System.TABLET_FLIPPED, 0) == 1);
 
+        mTabletScaledIcons = (CheckBoxPreference) findPreference(KEY_TABLET_SCALED_ICONS);
+        mTabletScaledIcons.setChecked(Settings.System.getInt(mContentResolver,
+                Settings.System.TABLET_SCALED_ICONS, 1) == 1);
+
         mStatusBarLightsOut =
                 (CheckBoxPreference) prefSet.findPreference(KEY_STATUS_BAR_LIGHTS_OUT);
         mStatusBarLightsOut.setChecked(Settings.System.getInt(mContentResolver,
@@ -152,6 +158,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             mPrefCategoryGeneral.removePreference(mStatusBarBrightnessControl);
         }
 
+        mClockColor =
+                (Preference) prefSet.findPreference("clock_color");
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -202,17 +210,15 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             value = mTabletUI.isChecked();
             Settings.System.putInt(mContentResolver, Settings.System.TABLET_MODE,
                     value ? 1 : 0);
-            IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager.checkService(
-                    Context.WINDOW_SERVICE));
-            try {
-                wm.clearForcedDisplaySize(Display.DEFAULT_DISPLAY);
-            } catch (Exception e) {
-            }
-            getActivity().recreate();
             return true;
         } else if (preference == mTabletFlipped) {
             value = mTabletFlipped.isChecked();
             Settings.System.putInt(mContentResolver, Settings.System.TABLET_FLIPPED,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mTabletScaledIcons) {
+            value = mTabletScaledIcons.isChecked();
+            Settings.System.putInt(mContentResolver, Settings.System.TABLET_SCALED_ICONS,
                     value ? 1 : 0);
             return true;
         } else if (preference == mStatusBarLightsOut) {
@@ -220,7 +226,24 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(mContentResolver, Settings.System.HIDE_SB_LIGHTS_OUT,
                     value ? 1 : 0);
             return true;
+        } else if (preference == mClockColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mClockColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.STATUS_BAR_CLOCK_COLOR, 0xff33b5e5));
+            cp.setDefaultColor(0xff33b5e5);
+            cp.show();
+            return true;
         }
         return false;
     }
+
+    ColorPickerDialog.OnColorChangedListener mClockColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.STATUS_BAR_CLOCK_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 }

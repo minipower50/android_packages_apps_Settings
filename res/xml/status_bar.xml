@@ -34,6 +34,11 @@
             android:entries="@array/entries_status_bar_am_pm"
             android:entryValues="@array/values_status_bar_am_pm" />
 
+        <PreferenceScreen
+            android:key="clock_color"
+            android:title="@string/clock_color_title">
+        </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -79,13 +84,20 @@
 
         <CheckBoxPreference
             android:key="tablet_ui"
-            android:title="@string/tablet_ui_title" />
+            android:title="@string/tablet_ui_title"
+            android:summary="@string/tablet_ui_summary" />
 
         <CheckBoxPreference
             android:key="tablet_flipped"
             android:dependency="tablet_ui"
             android:title="@string/tablet_flipped_title"
             android:summary="@string/tablet_flipped_summary" />
+
+        <CheckBoxPreference
+            android:key="tablet_scaled_icons"
+            android:dependency="tablet_ui"
+            android:title="@string/tablet_scaled_icons_title"
+            android:summary="@string/tablet_scaled_icons_summary" />
 
     </PreferenceCategory>
 
