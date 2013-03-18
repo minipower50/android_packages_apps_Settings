@@ -5287,4 +5287,8 @@
     <string name="combined_bar_settings_sleep">Sleep selector</string>
 
     <string name="clock_color_title">Clock color</string>
+    <string name="status_bar_color_title">Status bar color</string>
+    <string name="navigation_bar_color_title">Navigation bar color</string>
+    <string name="status_bar_fullscreen_title">Fullscreen mode</string>
+    <string name="status_bar_fullscreen_summary">Draw status bar over window content</string>
 </resources>

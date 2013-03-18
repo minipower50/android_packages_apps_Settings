@@ -65,10 +65,6 @@
             android:dependency="navigation_controls"
             android:title="@string/navigation_button_glow_color_title">
         </PreferenceScreen>
-<!--
-        <CheckBoxPreference
-            android:key="home_button_search"
-            android:title="@string/home_button_search_title" />
 
         <PreferenceScreen
             android:key="navigation_bar_color"
@@ -76,26 +72,4 @@
             android:title="@string/navigation_bar_color_title">
         </PreferenceScreen>
 
-        <PreferenceScreen
-            android:key="combined_bar_navigation_color"
-            android:dependency="navigation_controls"
-            android:title="@string/combined_bar_navigation_color_title">
-        </PreferenceScreen>
-
-        <CheckBoxPreference
-            android:key="combined_bar_navigation_glow"
-            android:dependency="navigation_controls"
-            android:title="@string/combined_bar_navigation_glow_title" />
-
-        <CheckBoxPreference
-            android:key="combined_bar_navigation_quick_glow"
-            android:dependency="combined_bar_navigation_glow"
-            android:title="@string/combined_bar_navigation_quick_glow_title" />
-
-        <PreferenceScreen
-            android:key="combined_bar_navigation_glow_color"
-            android:dependency="combined_bar_navigation_glow"
-            android:title="@string/combined_bar_navigation_glow_color_title">
-        </PreferenceScreen>
--->
 </PreferenceScreen>

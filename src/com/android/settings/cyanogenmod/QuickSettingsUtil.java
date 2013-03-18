@@ -42,16 +42,18 @@ import static com.android.internal.util.cm.QSConstants.TILE_USER;
 import static com.android.internal.util.cm.QSConstants.TILE_VOLUME;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFI;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
+import static com.android.internal.util.cm.QSUtils.deviceSupportsBluetooth;
+import static com.android.internal.util.cm.QSUtils.deviceSupportsTelephony;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 import android.content.Context;
 import android.provider.Settings;
 import android.text.TextUtils;
 
 import com.android.settings.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 
 public class QuickSettingsUtil {
 
@@ -118,6 +120,9 @@ public class QuickSettingsUtil {
         TILES.put(TILE_TORCH, new QuickSettingsUtil.TileInfo(
                 TILE_TORCH, R.string.title_tile_torch,
                 "com.android.systemui:drawable/ic_qs_torch_off"));
+        TILES.put(TILE_VOLUME, new QuickSettingsUtil.TileInfo(
+                TILE_VOLUME, R.string.title_tile_volume,
+                "com.android.systemui:drawable/ic_qs_volume"));
         TILES.put(TILE_WIFI, new QuickSettingsUtil.TileInfo(
                 TILE_WIFI, R.string.title_tile_wifi,
                 "com.android.systemui:drawable/ic_qs_wifi_4"));
@@ -139,7 +144,7 @@ public class QuickSettingsUtil {
         String tiles = Settings.System.getString(context.getContentResolver(),
                 Settings.System.QUICK_SETTINGS_TILES);
         if (tiles == null) {
-            tiles = TextUtils.join(TILE_DELIMITER, TILES_DEFAULT);
+            tiles = getDefaultTiles(context);
         }
         return tiles;
     }
@@ -150,7 +155,7 @@ public class QuickSettingsUtil {
     }
 
     public static void resetTiles(Context context) {
-        String defaultTiles = TextUtils.join(TILE_DELIMITER, TILES_DEFAULT);
+        String defaultTiles = getDefaultTiles(context);
         Settings.System.putString(context.getContentResolver(),
                 Settings.System.QUICK_SETTINGS_TILES, defaultTiles);
     }
@@ -193,6 +198,22 @@ public class QuickSettingsUtil {
             }
             return s;
         }
+    }
+
+    public static String getDefaultTiles(Context context) {
+        // Filter items not compatible with device
+        boolean bluetoothSupported = deviceSupportsBluetooth();
+        boolean telephonySupported = deviceSupportsTelephony(context);
+
+        if (!bluetoothSupported) {
+            TILES_DEFAULT.remove(TILE_BLUETOOTH);
+        }
+
+        if (!telephonySupported) {
+            TILES_DEFAULT.remove(TILE_MOBILEDATA);
+        }
+
+        return TextUtils.join(TILE_DELIMITER, TILES_DEFAULT);
     }
 
     public static class TileInfo {

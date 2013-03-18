@@ -59,8 +59,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mTabletFlipped;
     private CheckBoxPreference mTabletScaledIcons;
     private CheckBoxPreference mStatusBarLightsOut;
+    private CheckBoxPreference mStatusBarFullscreen;
 
     private Preference mClockColor;
+    private Preference mBarColor;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -160,6 +162,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mClockColor =
                 (Preference) prefSet.findPreference("clock_color");
+        mBarColor =
+                (Preference) prefSet.findPreference("status_bar_color");
+
+        mStatusBarFullscreen =
+                (CheckBoxPreference) prefSet.findPreference("status_bar_fullscreen");
+        mStatusBarFullscreen.setChecked(Settings.System.getInt(mContentResolver,
+                Settings.System.FULLSCREEN_MODE, 0) == 1);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -233,6 +242,18 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             cp.setDefaultColor(0xff33b5e5);
             cp.show();
             return true;
+        } else if (preference == mBarColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mBarColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.STATUS_BAR_COLOR, 0xff000000));
+            cp.setDefaultColor(0xff000000);
+            cp.show();
+            return true;
+        } else if (preference == mStatusBarFullscreen) {
+            value = mStatusBarFullscreen.isChecked();
+            Settings.System.putInt(mContentResolver, Settings.System.FULLSCREEN_MODE,
+                    value ? 1 : 0);
+            return true;
         }
         return false;
     }
@@ -242,6 +263,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.STATUS_BAR_CLOCK_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mBarColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.STATUS_BAR_COLOR, color);
             }
             public void colorUpdate(int color) {
             }
