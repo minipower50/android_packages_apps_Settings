@@ -40,6 +40,8 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private CheckBoxPreference mUmsNotificationConnect;
     private CheckBoxPreference mLargeRecentThumbs;
 
+    private Preference mRecentsColor;
+
     private ContentResolver mContentResolver;
     private Context mContext;
 
@@ -68,6 +70,9 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mLargeRecentThumbs.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.LARGE_RECENT_THUMBS, 0) == 1));
+
+        mRecentsColor =
+                (Preference) prefSet.findPreference("recents_panel_color");
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -94,7 +99,24 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.LARGE_RECENT_THUMBS, value ? 1 : 0);
             return true;
+        } else if (preference == mRecentsColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mRecentsColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.RECENTS_PANEL_COLOR, 0xe0000000));
+            cp.setDefaultColor(0xe0000000);
+            cp.show();
+            return true;
         }
         return false;
     }
+
+    ColorPickerDialog.OnColorChangedListener mRecentsColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.RECENTS_PANEL_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 }

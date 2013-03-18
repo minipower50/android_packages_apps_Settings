@@ -83,9 +83,21 @@
             android:summary="@string/status_bar_fullscreen_summary"
             android:defaultValue="false" />
 
+        <com.android.settings.cyanogenmod.SeekBarPreference
+            android:key="status_bar_timeout"
+            android:title="@string/status_bar_timeout_title"
+            android:summary="@string/status_bar_timeout_summary"
+            android:max="60"
+            android:defaultValue="0" />
+
         <PreferenceScreen
             android:key="status_bar_color"
             android:title="@string/status_bar_color_title">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="status_bar_notification_color"
+            android:title="@string/status_bar_notification_color_title">
         </PreferenceScreen>
     </PreferenceCategory>
 

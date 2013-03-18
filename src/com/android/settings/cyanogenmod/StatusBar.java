@@ -60,9 +60,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mTabletScaledIcons;
     private CheckBoxPreference mStatusBarLightsOut;
     private CheckBoxPreference mStatusBarFullscreen;
+    private SeekBarPreference mFullscreenTimeout;
 
     private Preference mClockColor;
     private Preference mBarColor;
+    private Preference mNotificationPanelColor;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -164,11 +166,20 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 (Preference) prefSet.findPreference("clock_color");
         mBarColor =
                 (Preference) prefSet.findPreference("status_bar_color");
+        mNotificationPanelColor =
+                (Preference) prefSet.findPreference("status_bar_notification_color");
+
 
         mStatusBarFullscreen =
                 (CheckBoxPreference) prefSet.findPreference("status_bar_fullscreen");
         mStatusBarFullscreen.setChecked(Settings.System.getInt(mContentResolver,
                 Settings.System.FULLSCREEN_MODE, 0) == 1);
+
+        mFullscreenTimeout = (SeekBarPreference) prefSet.findPreference("status_bar_timeout");
+        mFullscreenTimeout.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.FULLSCREEN_TIMEOUT, 0));
+        mFullscreenTimeout.setOnPreferenceChangeListener(this);
+        mFullscreenTimeout.setSummary(String.valueOf(mFullscreenTimeout.getDefault()));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -193,6 +204,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUS_BAR_SIGNAL_TEXT, signalStyle);
             mStatusBarCmSignal.setSummary(mStatusBarCmSignal.getEntries()[index]);
             return true;
+        } else if (preference == mFullscreenTimeout) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(mContentResolver, Settings.System.FULLSCREEN_TIMEOUT, value);
+            mFullscreenTimeout.setSummary(String.valueOf(value));
         }
         return false;
     }
@@ -249,6 +264,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             cp.setDefaultColor(0xff000000);
             cp.show();
             return true;
+        } else if (preference == mNotificationPanelColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mNotificationPanelColorListener, Settings.System.getInt(mContentResolver,
+                    Settings.System.NOTIFICATION_PANEL_COLOR, 0xff000000));
+            cp.setDefaultColor(0xff000000);
+            cp.show();
+            return true;
         } else if (preference == mStatusBarFullscreen) {
             value = mStatusBarFullscreen.isChecked();
             Settings.System.putInt(mContentResolver, Settings.System.FULLSCREEN_MODE,
@@ -273,6 +295,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.STATUS_BAR_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mNotificationPanelColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.NOTIFICATION_PANEL_COLOR, color);
             }
             public void colorUpdate(int color) {
             }

@@ -31,6 +31,11 @@
         android:title="@string/large_recent_thumbs_title"
         android:summary="@string/large_recent_thumbs_summary" />
 
+    <PreferenceScreen
+        android:key="recents_panel_color"
+        android:title="@string/recents_panel_color_title">
+    </PreferenceScreen>
+
     <CheckBoxPreference
         android:key="ums_notification_connect"
         android:title="@string/ums_notification_connect_title"
