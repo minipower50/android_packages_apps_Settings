@@ -5295,4 +5295,5 @@
     <string name="status_bar_timeout_summary">Hide the status bar after this many seconds</string>
     <string name="status_bar_notification_color_title">Notification panel color</string>
     <string name="recents_panel_color_title">Recents panel color</string>
+    <string name="tile_color_title">Tile color</string>
 </resources>
