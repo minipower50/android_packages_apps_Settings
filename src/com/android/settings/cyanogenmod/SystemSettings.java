@@ -49,6 +49,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
     private static final String KEY_NAVIGATION_CONTROL = "navigation_control";
     private static final String KEY_USER_INTERFACE = "user_interface";
     private static final String KEY_BAR_SETTINGS = "combined_bar_settings";
+    private static final String KEY_PIE_CONTROL = "pie_control";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -56,6 +57,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
     private PreferenceScreen mBarSettings;
     private PreferenceScreen mQuickSettings;
     private PreferenceScreen mNotificationPanel;
+    private PreferenceScreen mPieControl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,9 @@ public class SystemSettings extends SettingsPreferenceFragment {
             }
         }
 
+        // Pie controls
+        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
+
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
     }
@@ -161,6 +166,10 @@ public class SystemSettings extends SettingsPreferenceFragment {
             updateBatteryPulseDescription();
         }
 
+        if (mPieControl != null) {
+            updatePieControlDescription();
+        }
+
         mBarSettings = (PreferenceScreen) findPreference(KEY_BAR_SETTINGS);
         mQuickSettings = (PreferenceScreen) findPreference(KEY_QUICK_SETTINGS);
         mNotificationPanel = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
@@ -181,6 +190,15 @@ public class SystemSettings extends SettingsPreferenceFragment {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    private void updatePieControlDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 1) {
+            mPieControl.setSummary(getString(R.string.pie_control_enabled));
+        } else {
+            mPieControl.setSummary(getString(R.string.pie_control_disabled));
+        }
     }
 
     private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
