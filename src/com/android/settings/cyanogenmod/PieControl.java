@@ -5,6 +5,7 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.SeekBarDialogPreference;
@@ -29,7 +30,7 @@ public class PieControl extends SettingsPreferenceFragment
     };
 
     private CheckBoxPreference mPieControl;
-    private CheckBoxPreference mSearchButton;
+    private ListPreference mExtraButton;
     private SeekBarDialogPreference mPieSize;
     private CheckBoxPreference[] mTrigger = new CheckBoxPreference[4];
 
@@ -49,8 +50,8 @@ public class PieControl extends SettingsPreferenceFragment
         PreferenceScreen prefSet = getPreferenceScreen();
         mPieControl = (CheckBoxPreference) prefSet.findPreference(PIE_CONTROL);
         mPieControl.setOnPreferenceChangeListener(this);
-        mSearchButton = (CheckBoxPreference) prefSet.findPreference(SEARCH_BUTTON);
-        mSearchButton.setOnPreferenceChangeListener(this);
+        mExtraButton = (ListPreference) prefSet.findPreference("pie_control_extra");
+        mExtraButton.setOnPreferenceChangeListener(this);
         mPieSize = (SeekBarDialogPreference) prefSet.findPreference(PIE_SIZE);
 
         for (int i = 0; i < TRIGGER.length; i++) {
@@ -67,11 +68,33 @@ public class PieControl extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(),
                     Settings.System.PIE_CONTROLS, newState ? 1 : 0);
             propagatePieControl(newState);
-
-        } else if (preference == mSearchButton) {
+        } else if (preference == mExtraButton) {
+            boolean search = false;
+            boolean notif = false;
+            boolean settings = false;
+            boolean drawer = false;
+            switch (Integer.parseInt((String) newValue)) {
+                case 1:
+                    search = true;
+                    break;
+                case 2:
+                    notif = true;
+                    break;
+                case 3:
+                    settings = true;
+                    break;
+                case 4:
+                    drawer = true;
+                    break;
+            }
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_SEARCH, (Boolean) newValue ? 1 : 0);
-
+                    Settings.System.PIE_SEARCH, search ? 1 : 0);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PIE_SETTINGS, settings ? 1 : 0);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PIE_NOTIFICATIONS, notif ? 1 : 0);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PIE_DRAWER, drawer ? 1 : 0);
         } else {
             int triggerSlots = 0;
             for (int i = 0; i < mTrigger.length; i++) {
@@ -95,9 +118,6 @@ public class PieControl extends SettingsPreferenceFragment
                 Settings.System.PIE_CONTROLS, 0) == 1);
         propagatePieControl(mPieControl.isChecked());
 
-        mSearchButton.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_SEARCH, 0) == 1);
-
         getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.PIE_GRAVITY), true,
                 mPieTriggerObserver);
@@ -112,7 +132,6 @@ public class PieControl extends SettingsPreferenceFragment
     }
 
     private void propagatePieControl(boolean value) {
-        mSearchButton.setEnabled(value);
         for (int i = 0; i < mTrigger.length; i++) {
             mTrigger[i].setEnabled(value);
         }

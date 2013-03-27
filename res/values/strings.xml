@@ -5316,4 +5316,10 @@
     <string name="status_bar_notification_color_title">Notification panel color</string>
     <string name="recents_panel_color_title">Recents panel color</string>
     <string name="tile_color_title">Tile color</string>
+
+    <string name="pie_control_settings_title">Show quick settings button</string>
+    <string name="pie_control_notifications_title">Show notifications button</string>
+    <string name="pie_control_drawer_title">Show app drawer button</string>
+
+    <string name="pie_control_extra_title">Extra button</string>
 </resources>
