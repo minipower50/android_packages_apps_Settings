@@ -85,10 +85,8 @@ public class SystemSettings extends SettingsPreferenceFragment {
             // and the navigation bar config on phones that has a navigation bar
             boolean removeKeys = false;
             boolean removeNavbar = false;
-            if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.NAVIGATION_CONTROLS,
-                    getActivity().getApplicationContext().getResources().getBoolean(
-                    com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0) == 1) {
+            if (getResources().getInteger(
+                com.android.internal.R.integer.config_deviceHardwareKeys) == 0) {
                 removeKeys = true;
             } else {
                 removeNavbar = true;
