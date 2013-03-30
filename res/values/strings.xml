@@ -5322,4 +5322,7 @@
     <string name="pie_control_drawer_title">Show app drawer button</string>
 
     <string name="pie_control_extra_title">Extra button</string>
+    <string name="pie_color_title">PIE button color</string>
+    <string name="pie_selected_color_title">PIE selected button color</string>
+    <string name="pie_outline_color_title">PIE button color outline</string>
 </resources>
