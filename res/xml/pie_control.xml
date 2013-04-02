@@ -23,13 +23,6 @@
         android:title="@string/pie_control_title"
         android:defaultValue="false" />
 
-    <ListPreference
-        android:key="pie_control_extra"
-        android:title="@string/pie_control_extra_title"
-        android:entries="@array/pie_control_extra_entries"
-        android:entryValues="@array/pie_control_extra_values"
-        android:defaultValue="0" />
-
     <com.android.settings.cyanogenmod.PieSizePreference
         android:key="pie_control_size"
         android:title="@string/pie_control_size"

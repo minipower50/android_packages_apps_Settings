@@ -5,7 +5,6 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.SeekBarDialogPreference;
@@ -20,7 +19,6 @@ public class PieControl extends SettingsPreferenceFragment
     private static final int DEFAULT_POSITION = 1 << 1; // this equals Position.BOTTOM.FLAG
 
     private static final String PIE_CONTROL = "pie_control_checkbox";
-    private static final String SEARCH_BUTTON = "pie_control_search";
     private static final String PIE_SIZE = "pie_control_size";
     private static final String[] TRIGGER = {
         "pie_control_trigger_left",
@@ -30,7 +28,6 @@ public class PieControl extends SettingsPreferenceFragment
     };
 
     private CheckBoxPreference mPieControl;
-    private ListPreference mExtraButton;
     private SeekBarDialogPreference mPieSize;
     private CheckBoxPreference[] mTrigger = new CheckBoxPreference[4];
     private Preference mPieColor;
@@ -55,8 +52,6 @@ public class PieControl extends SettingsPreferenceFragment
         PreferenceScreen prefSet = getPreferenceScreen();
         mPieControl = (CheckBoxPreference) prefSet.findPreference(PIE_CONTROL);
         mPieControl.setOnPreferenceChangeListener(this);
-        mExtraButton = (ListPreference) prefSet.findPreference("pie_control_extra");
-        mExtraButton.setOnPreferenceChangeListener(this);
         mPieSize = (SeekBarDialogPreference) prefSet.findPreference(PIE_SIZE);
         mPieColor = prefSet.findPreference("pie_color");
         mPieSelectedColor = prefSet.findPreference("pie_selected_color");
@@ -142,33 +137,6 @@ public class PieControl extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(),
                     Settings.System.PIE_CONTROLS, newState ? 1 : 0);
             propagatePieControl(newState);
-        } else if (preference == mExtraButton) {
-            boolean search = false;
-            boolean notif = false;
-            boolean settings = false;
-            boolean drawer = false;
-            switch (Integer.parseInt((String) newValue)) {
-                case 1:
-                    search = true;
-                    break;
-                case 2:
-                    notif = true;
-                    break;
-                case 3:
-                    settings = true;
-                    break;
-                case 4:
-                    drawer = true;
-                    break;
-            }
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_SEARCH, search ? 1 : 0);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_SETTINGS, settings ? 1 : 0);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_NOTIFICATIONS, notif ? 1 : 0);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_DRAWER, drawer ? 1 : 0);
         } else if (preference == mPieStart) {
             int value = (Integer) newValue;
             Settings.System.putInt(getContentResolver(), Settings.System.PIE_START, value);
@@ -185,7 +153,7 @@ public class PieControl extends SettingsPreferenceFragment
                 }
             }
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_GRAVITY, triggerSlots);
+                    Settings.System.PIE_POSITIONS, triggerSlots);
         }
         return true;
     }
@@ -199,7 +167,7 @@ public class PieControl extends SettingsPreferenceFragment
         propagatePieControl(mPieControl.isChecked());
 
         getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.PIE_GRAVITY), true,
+                Settings.System.getUriFor(Settings.System.PIE_POSITIONS), true,
                 mPieTriggerObserver);
 
         updatePieTriggers();
@@ -220,7 +188,7 @@ public class PieControl extends SettingsPreferenceFragment
 
     private void updatePieTriggers() {
         int triggerSlots = Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_GRAVITY, DEFAULT_POSITION);
+                Settings.System.PIE_POSITIONS, DEFAULT_POSITION);
 
         for (int i = 0; i < mTrigger.length; i++) {
             if ((triggerSlots & (0x01 << i)) != 0) {
