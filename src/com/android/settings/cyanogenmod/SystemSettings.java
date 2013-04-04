@@ -16,17 +16,22 @@
 
 package com.android.settings.cyanogenmod;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -34,30 +39,38 @@ import com.android.settings.SettingsPreferenceFragment;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SystemSettings extends SettingsPreferenceFragment {
+public class SystemSettings extends SettingsPreferenceFragment  implements
+        Preference.OnPreferenceChangeListener {
     private static final String TAG = "SystemSettings";
 
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
+    private static final String KEY_NAVIGATION_RING = "navigation_ring";
+    private static final String KEY_NAVIGATION_BAR_CATEGORY = "navigation_bar_category";
     private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String KEY_STATUS_BAR = "status_bar";
     private static final String KEY_QUICK_SETTINGS = "quick_settings_panel";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_POWER_MENU = "power_menu";
+    private static final String KEY_PIE_CONTROL = "pie_control";
+    private static final String KEY_EXPANDED_DESKTOP = "expanded_desktop";
+    private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
     private static final String KEY_NAVIGATION_CONTROL = "navigation_control";
     private static final String KEY_USER_INTERFACE = "user_interface";
     private static final String KEY_BAR_SETTINGS = "combined_bar_settings";
-    private static final String KEY_PIE_CONTROL = "pie_control";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
-    private boolean mIsPrimary;
+    private PreferenceScreen mPieControl;
+    private ListPreference mExpandedDesktopPref;
+    private CheckBoxPreference mExpandedDesktopNoNavbarPref;
     private PreferenceScreen mBarSettings;
     private PreferenceScreen mQuickSettings;
     private PreferenceScreen mNotificationPanel;
-    private PreferenceScreen mPieControl;
+
+    private boolean mIsPrimary;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +78,17 @@ public class SystemSettings extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.system_settings);
         PreferenceScreen prefScreen = getPreferenceScreen();
+
+        // Only show the hardware keys config on a device that does not have a navbar
+        // and the navigation bar config on phones that has a navigation bar
+        boolean removeKeys = false;
+        boolean removeNavbar = false;
+        if (getResources().getInteger(
+            com.android.internal.R.integer.config_deviceHardwareKeys) == 0) {
+            removeKeys = true;
+        } else {
+            removeNavbar = true;
+        }
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -76,20 +100,8 @@ public class SystemSettings extends SettingsPreferenceFragment {
                 if (getResources().getBoolean(
                         com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
                     prefScreen.removePreference(mBatteryPulse);
-                } else {
-                    updateBatteryPulseDescription();
+                    mBatteryPulse = null;
                 }
-            }
-
-            // Only show the hardware keys config on a device that does not have a navbar
-            // and the navigation bar config on phones that has a navigation bar
-            boolean removeKeys = false;
-            boolean removeNavbar = false;
-            if (getResources().getInteger(
-                com.android.internal.R.integer.config_deviceHardwareKeys) == 0) {
-                removeKeys = true;
-            } else {
-                removeNavbar = true;
             }
 
             // Act on the above
@@ -120,35 +132,44 @@ public class SystemSettings extends SettingsPreferenceFragment {
         if (mNotificationPulse != null) {
             if (!getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed)) {
                 prefScreen.removePreference(mNotificationPulse);
-            } else {
-                updateLightPulseDescription();
+                mNotificationPulse = null;
             }
         }
 
         // Pie controls
         mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
+        if (mPieControl != null && removeNavbar) {
+            // Remove on devices without a navbar to start with
+            prefScreen.removePreference(mPieControl);
+            mPieControl = null;
+        }
+
+        // Expanded desktop
+        mExpandedDesktopPref = (ListPreference) findPreference(KEY_EXPANDED_DESKTOP);
+        mExpandedDesktopNoNavbarPref = (CheckBoxPreference) findPreference(KEY_EXPANDED_DESKTOP_NO_NAVBAR);
+
+        int expandedDesktopValue = Settings.System.getInt(getContentResolver(),
+                Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+
+        // Hide no-op "Status bar visible" mode on devices without navbar
+        try {
+            if (WindowManagerGlobal.getWindowManagerService().hasNavigationBar()) {
+                mExpandedDesktopPref.setOnPreferenceChangeListener(this);
+                mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
+                updateExpandedDesktop(expandedDesktopValue);
+                prefScreen.removePreference(mExpandedDesktopNoNavbarPref);
+            } else {
+                mExpandedDesktopNoNavbarPref.setOnPreferenceChangeListener(this);
+                mExpandedDesktopNoNavbarPref.setChecked(expandedDesktopValue > 0);
+                prefScreen.removePreference(mExpandedDesktopPref);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error getting navigation bar status");
+        }
 
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
     }
-
-    private void updateLightPulseDescription() {
-        if (Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.NOTIFICATION_LIGHT_PULSE, 0) == 1) {
-            mNotificationPulse.setSummary(getString(R.string.notification_light_enabled));
-        } else {
-            mNotificationPulse.setSummary(getString(R.string.notification_light_disabled));
-        }
-    }
-
-    private void updateBatteryPulseDescription() {
-        if (Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.BATTERY_LIGHT_ENABLED, 1) == 1) {
-            mBatteryPulse.setSummary(getString(R.string.notification_light_enabled));
-        } else {
-            mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
-        }
-     }
 
     @Override
     public void onResume() {
@@ -158,14 +179,13 @@ public class SystemSettings extends SettingsPreferenceFragment {
         if (mNotificationPulse != null) {
             updateLightPulseDescription();
         }
+        if (mPieControl != null) {
+            updatePieControlDescription();
+        }
 
         // Primary user only
         if (mIsPrimary && mBatteryPulse != null) {
             updateBatteryPulseDescription();
-        }
-
-        if (mPieControl != null) {
-            updatePieControlDescription();
         }
 
         mBarSettings = (PreferenceScreen) findPreference(KEY_BAR_SETTINGS);
@@ -189,6 +209,38 @@ public class SystemSettings extends SettingsPreferenceFragment {
     public void onPause() {
         super.onPause();
     }
+
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        if (preference == mExpandedDesktopPref) {
+            int expandedDesktopValue = Integer.valueOf((String) objValue);
+            updateExpandedDesktop(expandedDesktopValue);
+            return true;
+        } else if (preference == mExpandedDesktopNoNavbarPref) {
+            boolean value = (Boolean) objValue;
+            updateExpandedDesktop(value ? 2 : 0);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void updateLightPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.NOTIFICATION_LIGHT_PULSE, 0) == 1) {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_disabled));
+        }
+    }
+
+    private void updateBatteryPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.BATTERY_LIGHT_ENABLED, 1) == 1) {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
+        }
+     }
 
     private void updatePieControlDescription() {
         if (Settings.System.getInt(getActivity().getContentResolver(),
@@ -215,5 +267,30 @@ public class SystemSettings extends SettingsPreferenceFragment {
             }
         }
         return false;
+    }
+
+    private void updateExpandedDesktop(int value) {
+        ContentResolver cr = getContentResolver();
+        Resources res = getResources();
+        int summary = -1;
+
+        Settings.System.putInt(cr, Settings.System.EXPANDED_DESKTOP_STYLE, value);
+
+        if (value == 0) {
+            // Expanded desktop deactivated
+            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0);
+            Settings.System.putInt(cr, Settings.System.EXPANDED_DESKTOP_STATE, 0);
+            summary = R.string.expanded_desktop_disabled;
+        } else if (value == 1) {
+            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
+            summary = R.string.expanded_desktop_status_bar;
+        } else if (value == 2) {
+            Settings.System.putInt(cr, Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
+            summary = R.string.expanded_desktop_no_status_bar;
+        }
+
+        if (mExpandedDesktopPref != null && summary != -1) {
+            mExpandedDesktopPref.setSummary(res.getString(summary));
+        }
     }
 }

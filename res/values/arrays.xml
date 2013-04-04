@@ -1347,20 +1347,4 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="pie_control_extra_entries">
-        <item>@string/navring_action_none</item>
-        <item>@string/pie_control_search_title</item>
-        <item>@string/pie_control_notifications_title</item>
-        <item>@string/pie_control_settings_title</item>
-        <item>@string/pie_control_drawer_title</item>
-    </string-array>
-
-    <string-array name="pie_control_extra_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-
 </resources>
