@@ -5208,7 +5208,7 @@
 
     <!-- Quick/Pie Control #CM -->
     <string name="pie_control_title">Pie controls</string>
-    <string name="pie_control_enabled">Enabled when Expanded desktop is active</string>
+    <string name="pie_control_enabled">Enabled</string>
     <string name="pie_control_disabled">Disabled</string>
     <string name="pie_control_size">Navigation key size</string>
     <string name="pie_control_trigger_positions">Trigger positions</string>
