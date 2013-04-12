@@ -5206,7 +5206,7 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Choose action</string>
 
-    <!-- Quick/Pie Control #CM -->
+    <!-- Pie controls -->
     <string name="pie_control_title">Pie controls</string>
     <string name="pie_control_enabled">Enabled</string>
     <string name="pie_control_disabled">Disabled</string>
