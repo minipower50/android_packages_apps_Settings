@@ -18,6 +18,7 @@ package com.android.settings.cyanogenmod;
 
 import static com.android.internal.util.cm.QSConstants.TILES_DEFAULT;
 import static com.android.internal.util.cm.QSConstants.TILE_AIRPLANE;
+import static com.android.internal.util.cm.QSConstants.TILE_APPDRAWER;
 import static com.android.internal.util.cm.QSConstants.TILE_AUTOROTATE;
 import static com.android.internal.util.cm.QSConstants.TILE_BATTERY;
 import static com.android.internal.util.cm.QSConstants.TILE_BLUETOOTH;
@@ -44,7 +45,7 @@ import static com.android.internal.util.cm.QSConstants.TILE_VOLUME;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFI;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsBluetooth;
-import static com.android.internal.util.cm.QSUtils.deviceSupportsTelephony;
+import static com.android.internal.util.cm.QSUtils.deviceSupportsMobileData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,6 +134,9 @@ public class QuickSettingsUtil {
         TILES.put(TILE_WIFIAP, new QuickSettingsUtil.TileInfo(
                 TILE_WIFIAP, R.string.title_tile_wifiap,
                 "com.android.systemui:drawable/ic_qs_wifi_ap_neutral"));
+        TILES.put(TILE_APPDRAWER, new QuickSettingsUtil.TileInfo(
+                TILE_APPDRAWER, R.string.edge_swipe_app_drawer,
+                "com.android.systemui:drawable/ic_notify_quicksettings_normal"));
         TILES.put(TILE_DAYDREAM, new QuickSettingsUtil.TileInfo(
                 TILE_DAYDREAM, R.string.screensaver_settings_title,
                 "com.android.systemui:drawable/ic_qs_clock_circle"));
@@ -201,13 +205,13 @@ public class QuickSettingsUtil {
     public static String getDefaultTiles(Context context) {
         // Filter items not compatible with device
         boolean bluetoothSupported = deviceSupportsBluetooth();
-        boolean telephonySupported = deviceSupportsTelephony(context);
+        boolean mobileDataSupported = deviceSupportsMobileData(context);
 
         if (!bluetoothSupported) {
             TILES_DEFAULT.remove(TILE_BLUETOOTH);
         }
 
-        if (!telephonySupported) {
+        if (!mobileDataSupported) {
             TILES_DEFAULT.remove(TILE_MOBILEDATA);
         }
 
