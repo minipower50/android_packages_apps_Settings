@@ -147,6 +147,7 @@
         <item>@string/icon_picker_calendar</item>
         <item>@string/icon_picker_camera</item>
         <item>@string/icon_picker_chrome</item>
+        <item>@string/icon_picker_contacts</item>
         <item>@string/icon_picker_email</item>
         <item>@string/icon_picker_email2</item>
         <item>@string/icon_picker_facebook</item>
@@ -172,6 +173,7 @@
         <item>@*android:drawable/ic_lockscreen_calendar_normal</item>
         <item>@*android:drawable/ic_lockscreen_camera_normal</item>
         <item>@*android:drawable/ic_lockscreen_chrome_normal</item>
+        <item>@*android:drawable/ic_lockscreen_contacts_normal</item>
         <item>@*android:drawable/ic_lockscreen_email_normal</item>
         <item>@*android:drawable/ic_lockscreen_email2_normal</item>
         <item>@*android:drawable/ic_lockscreen_facebook_normal</item>
@@ -566,6 +568,7 @@
         <item>@string/edge_swipe_app</item>
         <item>@string/edge_swipe_recents</item>
         <item>@string/edge_swipe_app_drawer</item>
+        <item>@string/edge_swipe_app_switch</item>
     </string-array>
 
     <string-array name="edge_swipe_values" translatable="false">
@@ -579,6 +582,7 @@
         <item>7</item>
         <item>8</item>
         <item>9</item>
+        <item>10</item>
     </string-array>
 
     <string-array name="gesture_type_entries">
