@@ -64,7 +64,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.lcd_density);
         mContext = getActivity();
 
-        String currentDensity = SystemProperties.get("persist.lcd_density");
+        String currentDensity = SystemProperties.get("ro.sf.lcd_density");
         PreferenceScreen prefs = getPreferenceScreen();
 
         mCustomDensity = (ListPreference) findPreference("lcd_density");
@@ -206,15 +206,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
     private void setLcdDensity(int newDensity) {
         Helpers.getMount("rw");
-        CommandResult cr = new CMDProcessor().su.runWaitFor("grep persist.lcd_density /system/build.prop");
-        // not exists yet
-        if (cr.stdout == null || cr.stdout.length() == 0) {
-          new CMDProcessor().su.runWaitFor("echo 'persist.lcd_density=" + newDensity + "' >> /system/build.prop");
-        // set existing value
-        } else {
-          new CMDProcessor().su.runWaitFor("busybox sed -i 's|persist.lcd_density=.*|"
-                  + "persist.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
-        }
+        new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
+                + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
         Helpers.getMount("ro");
     }
 
