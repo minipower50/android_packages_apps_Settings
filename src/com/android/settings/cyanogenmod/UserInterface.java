@@ -88,10 +88,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
                 (Preference) prefSet.findPreference("recents_panel_color");
 
         mLcdDensity = findPreference("lcd_density_setup");
-        String currentProperty = SystemProperties.get("persist.lcd_density");
-        if (currentProperty == null || currentProperty.length() == 0) {
-            currentProperty = SystemProperties.get("ro.sf.lcd_density");
-        }
+        String currentProperty = SystemProperties.get("ro.sf.lcd_density");
         try {
             newDensityValue = Integer.parseInt(currentProperty);
         } catch (Exception e) {
