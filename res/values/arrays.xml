@@ -784,4 +784,17 @@
         <!-- Always allow app to send to premium SMS short code. -->
         <item>Always allow</item>
     </string-array>
+
+    <!-- Density Changer -->
+    <string-array name="lcd_density_entries" translatable="false">
+        <item>140</item>
+        <item>150</item>
+        <item>160</item>
+        <item>180</item>
+        <item>240</item>
+        <item>280</item>
+        <item>320</item>
+        <item>@string/custom_density</item>
+    </string-array>
+
 </resources>
