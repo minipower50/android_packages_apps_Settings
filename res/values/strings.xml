@@ -4534,4 +4534,31 @@
 
     <!-- Text to display in regulatory info screen (from device overlay). -->
     <string name="regulatory_info_text"></string>
+
+    <!-- LCD Density -->
+    <string name="lcd_density_title">LCD Density</string>
+    <string name="lcd_density_summary">Change the DPI of your device</string>
+    <string name="current_lcd_density">"Current LCD Density: "</string>
+    <string name="follow_through_title">LCD Density</string>
+    <string name="follow_through_summary">Follow the steps one-by-one and complete each one before proceeding to the next step.</string>
+    <string name="custom_density_title">1. Change LCD Density</string>
+    <string name="custom_density_summary">Pick or enter a new LCD density</string>
+    <string name="set_custom_density_set">Set</string>
+    <string name="set_custom_density_title">Set custom density</string>
+    <string name="custom_density_dialog_title">"WARNING!"</string>
+    <string name="custom_density_dialog_summary">"Changing the density can cause unexpected behavior, Market app incompatibility or SystemUI errors. Possible SystemUI errors can be fixed by reflashing the ROM or manually resetting ro.sf.lcd_density in /system/build.prop."</string>
+    <string name="custom_density_changed_summary">"Density set to: "</string>
+    <string name="custom_density_dialog_button_got">Ok</string>
+    <string name="custom_density_dialog_button_reboot">Reboot now</string>
+    <string name="custom_density">Custom</string>
+    <string name="custom_density_summary_invalid">"INVALID DENSITY!"</string>
+    <string name="reboot_title">2. Reboot!</string>
+    <string name="reboot_summary">Return to this page after you rebooted and continue with the next step.</string>
+    <string name="clear_market_data_title">3. Clear Market data</string>
+    <string name="clear_market_data_cleared">Market data cleared</string>
+    <string name="clear_market_data_not_cleared">"Market data could not be cleared, please clear it yourself."</string>
+    <string name="dpi">DPI</string>
+    <string name="open_market_title">4. Open Market and accept terms</string>
+    <string name="open_market_summary">Accept Market terms and adjust Market settings. Press back when done to return to this page.</string>
+    <string name="open_market_summary_could_not_open">"Could not open the market. If you're sure it is installed, open it from the launcher."</string>
 </resources>

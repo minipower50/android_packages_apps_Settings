@@ -19,10 +19,12 @@ package com.android.settings.cyanogenmod;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
@@ -46,6 +48,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
     private ContentResolver mContentResolver;
     private Context mContext;
+
+    private Preference mLcdDensity;
+    int newDensityValue;
+    DensityChanger densityFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,20 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mRecentsColor =
                 (Preference) prefSet.findPreference("recents_panel_color");
+
+        mLcdDensity = findPreference("lcd_density_setup");
+        String currentProperty = SystemProperties.get("persist.lcd_density");
+        if (currentProperty == null || currentProperty.length() == 0) {
+            currentProperty = SystemProperties.get("ro.sf.lcd_density");
+        }
+        try {
+            newDensityValue = Integer.parseInt(currentProperty);
+        } catch (Exception e) {
+            getPreferenceScreen().removePreference(mLcdDensity);
+        }
+
+        mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
+
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -117,6 +137,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             value = mHideUsbNotification.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.HIDE_USB_NOTIFICATION, value ? 1 : 0);
+            return true;
+        } else if (preference == mLcdDensity) {
+            ((PreferenceActivity) getActivity())
+                    .startPreferenceFragment(new DensityChanger(), true);
             return true;
         }
         return false;
