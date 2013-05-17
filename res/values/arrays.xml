@@ -951,7 +951,7 @@
         <item>240</item>
         <item>280</item>
         <item>320</item>
-        <item>@string/custom_density</item>
+        <item>@string/lcd_density_custom</item>
     </string-array>
 
 </resources>
