@@ -41,7 +41,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
     private static final int MSG_DATA_CLEARED = 500;
 
-    private static final int DIALOG_DENSITY = 101;
+    private static final int DIALOG_CUSTOM_DENSITY = 101;
     private static final int DIALOG_WARN_DENSITY = 102;
 
     int newDensityValue;
@@ -51,7 +51,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case MSG_DATA_CLEARED:
-                    mClearMarketData.setSummary(R.string.clear_market_data_cleared);
+                    mClearMarketData.setSummary(R.string.lcd_density_market_data_cleared);
                     break;
             }
 
@@ -67,11 +67,11 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         String currentDensity = SystemProperties.get("ro.sf.lcd_density");
         PreferenceScreen prefs = getPreferenceScreen();
 
-        mCustomDensity = (ListPreference) findPreference("lcd_density");
+        mCustomDensity = (ListPreference) findPreference("lcd_density_picker");
         mCustomDensity.setOnPreferenceChangeListener(this);
 
-        mReboot = findPreference("reboot");
-        mClearMarketData = findPreference("clear_market_data");
+        mReboot = findPreference("lcd_density_reboot");
+        mClearMarketData = findPreference("lcd_density_clear_market_data");
         mOpenMarket = findPreference("open_market");
     }
 
@@ -108,7 +108,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 mContext.startActivity(openMarket);
             } else {
                 preference
-                        .setSummary(getResources().getString(R.string.open_market_summary_could_not_open));
+                        .setSummary(getResources().getString(R.string.lcd_density_open_market_failed_text));
             }
             return true;
 
@@ -122,13 +122,13 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         LayoutInflater factory = LayoutInflater.from(mContext);
 
         switch (dialogId) {
-            case DIALOG_DENSITY:
+            case DIALOG_CUSTOM_DENSITY:
                 final View textEntryView = factory.inflate(
-                        R.layout.alert_dialog_text_entry, null);
+                        R.layout.custom_density_entry_dialog, null);
                 return new AlertDialog.Builder(getActivity())
-                        .setTitle(getResources().getString(R.string.set_custom_density_title))
+                        .setTitle(getResources().getString(R.string.lcd_density_enter_custom_density_title))
                         .setView(textEntryView)
-                        .setPositiveButton(getResources().getString(R.string.set_custom_density_set), new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.lcd_density_enter_custom_density_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 EditText dpi = (EditText) textEntryView.findViewById(R.id.dpi_edit);
                                 Editable text = dpi.getText();
@@ -138,7 +138,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                                     newDensityValue = Integer.parseInt(text.toString());
                                     showDialog(DIALOG_WARN_DENSITY);
                                 } catch (Exception e) {
-                                    mCustomDensity.setSummary(getResources().getString(R.string.custom_density_summary_invalid));
+                                    mCustomDensity.setSummary(getResources().getString(R.string.lcd_density_invalid_text));
                                 }
 
                             }
@@ -151,21 +151,21 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                         }).create();
             case DIALOG_WARN_DENSITY:
                 return new AlertDialog.Builder(getActivity())
-                        .setTitle(getResources().getString(R.string.custom_density_dialog_title))
+                        .setTitle(getResources().getString(R.string.lcd_density_dialog_title))
                         .setMessage(
-                                getResources().getString(R.string.custom_density_dialog_summary))
+                                getResources().getString(R.string.lcd_density_dialog_summary))
                         .setCancelable(false)
-                        .setNeutralButton(getResources().getString(R.string.custom_density_dialog_button_got), new DialogInterface.OnClickListener() {
+                        .setNeutralButton(getResources().getString(R.string.lcd_density_dialog_button_ok), new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 setLcdDensity(newDensityValue);
                                 dialog.dismiss();
-                                mCustomDensity.setSummary(getResources().getString(R.string.custom_density_changed_summary) + newDensityValue);
+                                mCustomDensity.setSummary(getResources().getString(R.string.lcd_density_changed_summary) + newDensityValue);
 
                             }
                         })
-                        .setPositiveButton(getResources().getString(R.string.custom_density_dialog_button_reboot), new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.lcd_density_dialog_button_reboot), new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -191,8 +191,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mCustomDensity) {
             String strValue = (String) newValue;
-            if (strValue.equals(getResources().getString(R.string.custom_density))) {
-                showDialog(DIALOG_DENSITY);
+            if (strValue.equals(getResources().getString(R.string.lcd_density_custom))) {
+                showDialog(DIALOG_CUSTOM_DENSITY);
                 return true;
             } else {
                 newDensityValue = Integer.parseInt((String) newValue);
@@ -240,8 +240,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         }
 
         protected void onPostExecute(Boolean result) {
-            mClearMarketData.setSummary(result ? getResources().getString(R.string.clear_market_data_cleared)
-                    : getResources().getString(R.string.clear_market_data_not_cleared));
+            mClearMarketData.setSummary(result ? getResources().getString(R.string.lcd_density_market_data_cleared)
+                    : getResources().getString(R.string.lcd_density_market_data_not_cleared));
         }
     }
 }

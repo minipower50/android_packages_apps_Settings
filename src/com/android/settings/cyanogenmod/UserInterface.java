@@ -88,7 +88,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             getPreferenceScreen().removePreference(mLcdDensity);
         }
 
-        mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
+        mLcdDensity.setSummary(getResources().getString(R.string.lcd_density_current) + currentProperty);
 
     }
 
