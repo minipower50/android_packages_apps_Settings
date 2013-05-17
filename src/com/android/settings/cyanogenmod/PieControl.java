@@ -33,8 +33,6 @@ public class PieControl extends SettingsPreferenceFragment
     private Preference mPieColor;
     private Preference mPieSelectedColor;
     private Preference mPieOutlineColor;
-    private SeekBarPreference mPieStart;
-    private SeekBarPreference mPieDistance;
 
     private ContentObserver mPieTriggerObserver = new ContentObserver(new Handler()) {
         @Override
@@ -56,14 +54,6 @@ public class PieControl extends SettingsPreferenceFragment
         mPieColor = prefSet.findPreference("pie_color");
         mPieSelectedColor = prefSet.findPreference("pie_selected_color");
         mPieOutlineColor = prefSet.findPreference("pie_outline_color");
-        mPieStart = (SeekBarPreference) prefSet.findPreference("pie_start");
-        mPieStart.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
-                .getContentResolver(), Settings.System.PIE_START, 3));
-        mPieStart.setOnPreferenceChangeListener(this);
-        mPieDistance = (SeekBarPreference) prefSet.findPreference("pie_distance");
-        mPieDistance.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
-                .getContentResolver(), Settings.System.PIE_DISTANCE, 8));
-        mPieDistance.setOnPreferenceChangeListener(this);
 
         for (int i = 0; i < TRIGGER.length; i++) {
             mTrigger[i] = (CheckBoxPreference) prefSet.findPreference(TRIGGER[i]);
@@ -137,12 +127,6 @@ public class PieControl extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(),
                     Settings.System.PIE_CONTROLS, newState ? 1 : 0);
             propagatePieControl(newState);
-        } else if (preference == mPieStart) {
-            int value = (Integer) newValue;
-            Settings.System.putInt(getContentResolver(), Settings.System.PIE_START, value);
-        } else if (preference == mPieDistance) {
-            int value = (Integer) newValue;
-            Settings.System.putInt(getContentResolver(), Settings.System.PIE_DISTANCE, value);
         } else {
             int triggerSlots = 0;
             for (int i = 0; i < mTrigger.length; i++) {

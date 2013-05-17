@@ -608,5 +608,17 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="transition_entries">
+        <item>@string/default_transition</item>
+        <item>@string/slide_right</item>
+        <item>@string/slide_left</item>
+    </string-array>
+
+    <string-array name="transition_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
 

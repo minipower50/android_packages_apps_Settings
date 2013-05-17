@@ -176,5 +176,17 @@
             android:max="150"
             android:defaultValue="0" />
 
+    <ListPreference android:key="drawer_transition"
+            android:title="@string/drawer_transition_title"
+            android:entries="@array/transition_entries"
+            android:entryValues="@array/transition_values"
+            android:persistent="false"
+            android:defaultValue="0"/>
 
+    <ListPreference android:key="app_switch_transition"
+            android:title="@string/app_switch_transition_title"
+            android:entries="@array/transition_entries"
+            android:entryValues="@array/transition_values"
+            android:persistent="false"
+            android:defaultValue="0"/>
 </PreferenceScreen>

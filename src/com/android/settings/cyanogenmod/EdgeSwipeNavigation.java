@@ -70,6 +70,9 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
 
     private SeekBarPreference mEdgeSwipeDistance;
 
+    private ListPreference mDrawerTransition;
+    private ListPreference mAppSwitchTransition;
+
     private ContentResolver mContentResolver;
 
     private SharedPreferences mPrefs;
@@ -187,6 +190,20 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
                 .getContentResolver(), Settings.System.GESTURE_SWIPE_DISTANCE, 0));
         mEdgeSwipeDistance.setOnPreferenceChangeListener(this);
         mEdgeSwipeDistance.setSummary(String.valueOf(mEdgeSwipeDistance.getDefault()));
+
+        mDrawerTransition = (ListPreference) findPreference("drawer_transition");
+        mDrawerTransition.setOnPreferenceChangeListener(this);
+        int drawerTransition = Settings.System.getInt(mContentResolver,
+                Settings.System.DRAWER_TRANSITION, 0);
+        mDrawerTransition.setValue(String.valueOf(drawerTransition));
+        updateSummary(mDrawerTransition, drawerTransition);
+
+        mAppSwitchTransition = (ListPreference) findPreference("app_switch_transition");
+        mAppSwitchTransition.setOnPreferenceChangeListener(this);
+        int appSwitchTransition = Settings.System.getInt(mContentResolver,
+                Settings.System.APP_SWITCH_TRANSITION, 0);
+        mAppSwitchTransition.setValue(String.valueOf(appSwitchTransition));
+        updateSummary(mAppSwitchTransition, appSwitchTransition);
     }
 
     private void updateSummary(ListPreference preference, int value) {
@@ -292,6 +309,14 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
             int value = (Integer) objValue;
             Settings.System.putInt(mContentResolver, GESTURE_SWIPE_DISTANCE, value);
             mEdgeSwipeDistance.setSummary(String.valueOf(value));
+        } else if (preference == mDrawerTransition) {
+            int value = Integer.parseInt((String) objValue);
+            Settings.System.putInt(mContentResolver, Settings.System.DRAWER_TRANSITION, value);
+            updateSummary(mDrawerTransition, value);
+        } else if (preference == mAppSwitchTransition) {
+            int value = Integer.parseInt((String) objValue);
+            Settings.System.putInt(mContentResolver, Settings.System.APP_SWITCH_TRANSITION, value);
+            updateSummary(mAppSwitchTransition, value);
         }
         return true;
     }
