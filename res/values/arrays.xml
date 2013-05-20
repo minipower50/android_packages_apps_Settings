@@ -700,6 +700,19 @@
         <item>Always use HDCP checking</item>
     </string-array>
 
+    <!-- Titles for window/transition/duration animation scale preference. [CHAR LIMIT=35] -->
+    <string-array name="animation_scale_entries">
+        <item>0</item>
+        <item>0.25x</item>
+        <item>0.5x</item>
+        <item>0.75x</item>
+        <item>1x</item>
+        <item>1.5x</item>
+        <item>2x</item>
+        <item>5x</item>
+        <item>10x</item>
+    </string-array>
+
     <!-- Titles for window animation scale preference. [CHAR LIMIT=35] -->
     <string-array name="window_animation_scale_entries">
         <item>Animation off</item>
