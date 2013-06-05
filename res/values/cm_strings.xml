@@ -1058,4 +1058,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="default_transition">Normal animation</string>
     <string name="slide_right">Slide right</string>
     <string name="slide_left">Slide left</string>
+
+    <!-- Display Screen-on and off Electron beam animations -->
+    <string name="screen_off_animation_title">Screen-off animation</string>
+    <string name="screen_off_animation_summary">Show the electron beam animation when the screen is turned off</string>
 </resources>
