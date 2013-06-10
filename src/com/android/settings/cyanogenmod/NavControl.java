@@ -107,7 +107,7 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
                 Settings.System.NAVIGATION_CONTROLS, mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0) == 1);
 
-        if (Utils.isPhone(mContext) || !tabletMode) {
+        if (!tabletMode) {
             prefSet.removePreference(mCombinedBarNavigationForceMenu);
         } else {
             Preference naviBar = findPreference(KEY_NAVIGATION_BAR);

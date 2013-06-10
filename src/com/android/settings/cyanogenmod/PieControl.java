@@ -20,6 +20,7 @@ public class PieControl extends SettingsPreferenceFragment
     private static final int DEFAULT_POSITION = 1 << 1; // this equals Position.BOTTOM.FLAG
 
     private static final String PIE_CONTROL = "pie_control_checkbox";
+    private static final String PIE_CONTROL_ALWAYS = "pie_control_always_checkbox";
     private static final String PIE_SENSITIVITY = "pie_control_sensitivity";
     private static final String PIE_SIZE = "pie_control_size";
     private static final String[] TRIGGER = {
@@ -30,6 +31,7 @@ public class PieControl extends SettingsPreferenceFragment
     };
 
     private CheckBoxPreference mPieControl;
+    private CheckBoxPreference mPieControlAlways;
     private ListPreference mPieSensitivity;
     private SeekBarDialogPreference mPieSize;
     private CheckBoxPreference[] mTrigger = new CheckBoxPreference[4];
@@ -53,6 +55,8 @@ public class PieControl extends SettingsPreferenceFragment
         PreferenceScreen prefSet = getPreferenceScreen();
         mPieControl = (CheckBoxPreference) prefSet.findPreference(PIE_CONTROL);
         mPieControl.setOnPreferenceChangeListener(this);
+        mPieControlAlways = (CheckBoxPreference) prefSet.findPreference(PIE_CONTROL_ALWAYS);
+        mPieControlAlways.setOnPreferenceChangeListener(this);
         mPieSensitivity = (ListPreference) prefSet.findPreference(PIE_SENSITIVITY);
         mPieSensitivity.setOnPreferenceChangeListener(this);
         mPieSize = (SeekBarDialogPreference) prefSet.findPreference(PIE_SIZE);
@@ -129,10 +133,20 @@ public class PieControl extends SettingsPreferenceFragment
         if (preference == mPieControl) {
             boolean newState = (Boolean) newValue;
 
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_CONTROLS, newState ? 1 : 0);
-            propagatePieControl(newState);
+            boolean pieAlways = Settings.System.getInt(getContentResolver(),
+                    Settings.System.PIE_CONTROLS, 0) == 2;
 
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PIE_CONTROLS, newState ? (pieAlways ? 2 : 1) : 0);
+            propagatePieControl(newState);
+        } else if (preference == mPieControlAlways) {
+            boolean newState = (Boolean) newValue;
+
+            boolean pie = Settings.System.getInt(getContentResolver(),
+                    Settings.System.PIE_CONTROLS, 0) > 0;
+
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PIE_CONTROLS, newState ? 2 : (pie ? 1 : 0));
         } else if (preference == mPieSensitivity) {
             String newState = (String) newValue;
 
@@ -160,7 +174,9 @@ public class PieControl extends SettingsPreferenceFragment
         super.onResume();
 
         mPieControl.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) == 1);
+                Settings.System.PIE_CONTROLS, 0) > 0);
+        mPieControlAlways.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 2);
         propagatePieControl(mPieControl.isChecked());
 
         int sensitivity = Settings.System.getInt(getContentResolver(),

@@ -940,6 +940,14 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="power_notifications_ringtone_title">Notification sound</string>
     <!-- Sound settings, power notifications label for ringtone == none -->
     <string name="power_notifications_ringtone_silent">Silent</string>
+
+    <!-- Display Screen-on and off Electron beam animations -->
+    <string name="screen_off_animation_title">Screen-off animation</string>
+    <string name="screen_off_animation_summary">Show the electron beam animation when the screen is turned off</string>
+
+    <!-- Delete apn confirmation dialog message -->
+    <string name="confirm_delete_apn">The APN will be deleted.</string>
+
     <string name="navigation_controls_title">Navigation buttons</string>
 
     <string name="lockscreen_all_widgets_title">Show all widgets in lockscreen</string>
@@ -1044,6 +1052,10 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="pie_control_notifications_title">Show notifications button</string>
     <string name="pie_control_drawer_title">Show app drawer button</string>
 
+    <string name="pie_control_always_title">Always allow pie controls</string>
+    <string name="pie_control_always_summary_on">Allow pie controls with expanded desktop disabled</string>
+    <string name="pie_control_always_summary_off">Do not allow pie controls with expanded desktop disabled</string>
+
     <string name="pie_control_extra_title">Extra button</string>
     <string name="pie_color_title">PIE button color</string>
     <string name="pie_selected_color_title">PIE selected button color</string>
@@ -1059,7 +1071,4 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="slide_right">Slide right</string>
     <string name="slide_left">Slide left</string>
 
-    <!-- Display Screen-on and off Electron beam animations -->
-    <string name="screen_off_animation_title">Screen-off animation</string>
-    <string name="screen_off_animation_summary">Show the electron beam animation when the screen is turned off</string>
 </resources>
