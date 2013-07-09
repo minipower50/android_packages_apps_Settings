@@ -190,6 +190,8 @@ public class EdgeSwipeNavigation extends SettingsPreferenceFragment implements
                 .getContentResolver(), Settings.System.GESTURE_SWIPE_DISTANCE, 0));
         mEdgeSwipeDistance.setOnPreferenceChangeListener(this);
         mEdgeSwipeDistance.setSummary(String.valueOf(mEdgeSwipeDistance.getDefault()));
+        mEdgeSwipeDistance.setPositiveButtonText("");
+        mEdgeSwipeDistance.setNegativeButtonText("");
 
         mDrawerTransition = (ListPreference) findPreference("drawer_transition");
         mDrawerTransition.setOnPreferenceChangeListener(this);

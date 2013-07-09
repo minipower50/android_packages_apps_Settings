@@ -28,10 +28,11 @@
             android:dependency="navigation_controls"
             android:title="@string/navigation_bar_title" />
 
-        <CheckBoxPreference
-            android:key="combined_bar_navigation_force_menu"
-            android:title="@string/combined_bar_navigation_force_menu_title"
-            android:dependency="navigation_controls" />
+        <PreferenceScreen
+            android:key="tablet_bar"
+            android:fragment="com.android.settings.cyanogenmod.TabletNavigationSettings"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_bar_title" />
 
         <ListPreference
             android:key="nav_alignment"
@@ -71,5 +72,12 @@
             android:dependency="navigation_controls"
             android:title="@string/navigation_bar_color_title">
         </PreferenceScreen>
+
+        <com.android.settings.cyanogenmod.SeekBarPreference
+            android:key="navigation_height"
+            android:dependency="navigation_controls"
+            android:title="@string/navigation_height_title"
+            android:max="120"
+            android:defaultValue="100" />
 
 </PreferenceScreen>

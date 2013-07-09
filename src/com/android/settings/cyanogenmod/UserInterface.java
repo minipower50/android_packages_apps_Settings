@@ -37,10 +37,12 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String DUAL_PANE_PREFS = "dual_pane_prefs";
     private static final String UMS_NOTIFICATION_CONNECT = "ums_notification_connect";
     private static final String LARGE_RECENT_THUMBS = "large_recent_thumbs";
+    private static final String HIDE_USB_NOTIFICATION = "hide_usb_notification";
 
     private ListPreference mDualPanePrefs;
     private CheckBoxPreference mUmsNotificationConnect;
     private CheckBoxPreference mLargeRecentThumbs;
+    private CheckBoxPreference mHideUsbNotification;
 
     private Preference mRecentsColor;
 
@@ -71,6 +73,11 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mUmsNotificationConnect.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.UMS_NOTIFICATION_CONNECT, 0) == 1));
+
+        mHideUsbNotification = (CheckBoxPreference) prefSet.findPreference(HIDE_USB_NOTIFICATION);
+
+        mHideUsbNotification.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.HIDE_USB_NOTIFICATION, 0) == 1));
 
         mLargeRecentThumbs = (CheckBoxPreference) prefSet.findPreference(LARGE_RECENT_THUMBS);
 
@@ -126,6 +133,11 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         } else if (preference == mLcdDensity) {
             ((PreferenceActivity) getActivity())
                     .startPreferenceFragment(new DensityChanger(), true);
+            return true;
+        } else if (preference == mHideUsbNotification) {
+            value = mHideUsbNotification.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.HIDE_USB_NOTIFICATION, value ? 1 : 0);
             return true;
         }
         return false;

@@ -66,7 +66,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private ListPreference mExpandedDesktopPref;
     private PreferenceScreen mBarSettings;
     private PreferenceScreen mQuickSettings;
-    private PreferenceScreen mNotificationPanel;
 
     private boolean mIsPrimary;
 
@@ -79,11 +78,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         // Only show the hardware keys config on a device that does not have a navbar
         // and the navigation bar config on phones that has a navigation bar
-        boolean removeKeys = false;
-        boolean removeNavbar = false;
         if (getResources().getInteger(
-            com.android.internal.R.integer.config_deviceHardwareKeys) == 0) {
-            removeKeys = true;
+                com.android.internal.R.integer.config_deviceHardwareKeys) == 0) {
+            prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
         }
 
         // Determine which user is logged in
@@ -99,22 +96,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
                     mBatteryPulse = null;
                 }
             }
-
-            // Act on the above
-            if (removeKeys) {
-                prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
-            }
         } else {
             // Secondary user is logged in, remove all primary user specific preferences
             prefScreen.removePreference(findPreference(KEY_BATTERY_LIGHT));
-            prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
-            prefScreen.removePreference(findPreference(KEY_STATUS_BAR));
-            prefScreen.removePreference(findPreference(KEY_QUICK_SETTINGS));
-            prefScreen.removePreference(findPreference(KEY_POWER_MENU));
-            prefScreen.removePreference(findPreference(KEY_NOTIFICATION_DRAWER));
-            prefScreen.removePreference(findPreference(KEY_NAVIGATION_CONTROL));
-            prefScreen.removePreference(findPreference(KEY_USER_INTERFACE));
-            prefScreen.removePreference(mBarSettings);
         }
 
         // Preferences that applies to all users
@@ -153,7 +137,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         mBarSettings = (PreferenceScreen) findPreference(KEY_BAR_SETTINGS);
         mQuickSettings = (PreferenceScreen) findPreference(KEY_QUICK_SETTINGS);
-        mNotificationPanel = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
 
         boolean tabletMode = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.TABLET_MODE,
@@ -162,9 +145,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         if (!tabletMode && mBarSettings != null) {
             getPreferenceScreen().removePreference(mBarSettings);
-        } else if (tabletMode) {
-            if (mQuickSettings != null) getPreferenceScreen().removePreference(mQuickSettings);
-            if (mNotificationPanel != null) getPreferenceScreen().removePreference(mNotificationPanel);
+        } else if (tabletMode && mQuickSettings != null) {
+            getPreferenceScreen().removePreference(mQuickSettings);
         }
 
         // Expanded desktop
@@ -212,9 +194,12 @@ public class SystemSettings extends SettingsPreferenceFragment implements
      }
 
     private void updatePieControlDescription() {
-        if (Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) == 1) {
+        int value = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0);
+        if (value == 1) {
             mPieControl.setSummary(getString(R.string.pie_control_enabled));
+        } else if (value == 2) {
+            mPieControl.setSummary(getString(R.string.pie_control_enabled_always));
         } else {
             mPieControl.setSummary(getString(R.string.pie_control_disabled));
         }

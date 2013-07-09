@@ -132,6 +132,9 @@
     <string name="profile_delete_confirm">¿Borrar este perfil?</string>
     <string name="profile_app_delete_confirm">¿Borrar esta aplicación?</string>
     <string name="profile_cannot_delete">No se puede borrar el perfil activo</string>
+    <string name="profile_networkmode_2g">2G</string>
+    <string name="profile_networkmode_3g">3G</string>
+    <string name="profile_networkmode_2g3g">2G/3G</string>
     <string name="profile_connectionoverrides_title">Conectividad</string>
     <string name="profile_volumeoverrides_title">Volumen</string>
     <string name="profile_vibratoroverrides_title">Vibración</string>
@@ -148,6 +151,9 @@
     <string name="profile_appgroup_manage">Administrar grupo de aplicaciones</string>
     <string name="profile_settings">Ajustes de perfil</string>
     <string name="profile_name">Nombre</string>
+    <string name="profile_trigger_connect">Al conectar</string>
+    <string name="profile_trigger_disconnect">Al desconectar</string>
+    <string name="profile_trigger_notrigger">Sin evento</string>
     <string name="sound_mode">Modo de notificación</string>
     <string name="ringer_mode">Llamadas</string>
     <string name="lights_mode">Brillo</string>
@@ -299,6 +305,11 @@
     <string name="increasing_ring_interval_3seconds">3 segundos</string>
     <string name="increasing_ring_interval_5seconds">5 segundos</string>
     <string name="increasing_ring_interval_10seconds">10 segundos</string>
+    <string name="profile_trigger_configure">Configurar evento</string>
+    <string name="profile_triggers">Eventos</string>
+    <string name="profile_trigger_filter_all">Cualquier evento</string>
+    <string name="profile_trigger_filter_wifi">Eventos Wi-Fi</string>
+    <string name="profile_trigger_filter_bluetooth">Eventos Bluetooth</string>
     <string name="profile_write_nfc_tag">Escribir a etiqueta NFC</string>
     <string name="profile_write_touch_tag">Tocar etiqueta para escribir</string>
     <string name="profile_write_success">Etiqueta escrita correctamente</string>
@@ -475,8 +486,10 @@
     <string name="status_bar_notif_count_title">Mostrar contador notificaciones</string>
     <string name="status_bar_notif_count_summary">Mostrar el número de notificaciones pendientes en la barra de estado</string>
     <string name="display_category_wakeup_options_title">Opciones de reanudación</string>
+    <string name="pref_home_wake_title">Botón Inicio</string>
+    <string name="pref_home_wake_summary">Presionando el botón de inicio, el dispositivo saldrá del modo en espera</string>
     <string name="pref_volume_wake_title">Controles de volumen</string>
-    <string name="pref_volume_wake_summary">Presionando los botones de control de volumen el dispositivo saldrá del modo en espera</string>
+    <string name="pref_volume_wake_summary">Presionando los botones de control de volumen, el dispositivo saldrá del modo en espera</string>
     <string name="adb_notify">Notificar depuración USB</string>
     <string name="adb_notify_summary">Mostrar una notificación cuando el modo de depuración USB esté conectado</string>
     <string name="development_tools_title">Iniciar Herramientas</string>
@@ -506,6 +519,7 @@
     <string name="title_tile_battery">Batería</string>
     <string name="title_tile_bluetooth">Bluetooth</string>
     <string name="title_tile_brightness">Brillo</string>
+    <string name="title_tile_camera">Cámara</string>
     <string name="title_tile_sleep">Bloquear</string>
     <string name="title_tile_gps">GPS</string>
     <string name="title_tile_torch">Linterna</string>
@@ -691,11 +705,18 @@ podrás crear una nueva línea con el fin de insertar puntos de control adiciona
     <string name="wifi_ibss_freq_title">Canal / Frecuencia</string>
     <string name="wifi_channel">Canal</string>
     <string name="wifi_mhz">MHz</string>
-    <string name="power_notifications_category_title">Notificación de carga/descarga</string>
-    <string name="power_notifications_enable_title">Habilitada</string>
+    <string name="power_notifications_category_title">Cargador</string>
+    <string name="power_notifications_enable_title">Sonido</string>
+<string name="power_notifications_enable_summary">Reproducir un sonido al conectar o desconectar el cargador</string>
     <string name="power_notifications_vibrate_title">Vibración</string>
     <string name="power_notifications_ringtone_title">Sonido de notificación</string>
     <string name="power_notifications_ringtone_silent">Ninguno</string>
     <string name="screen_off_animation_title">Efecto al apagar</string>
     <string name="screen_off_animation_summary">Mostrar un efecto animado al apagar la pantalla</string>
+    <string name="confirm_delete_apn">El APN será borrado.</string>
+    <string name="privacy_guard_switch_label">Habilitar privacidad</string>
+    <string name="privacy_guard_dlg_title">¿Habilitar privacidad?</string>
+    <string name="privacy_guard_dlg_text">Cuando la privacidad está habilitada, la aplicación no podrá acceder a los datos personales, tales como contactos, mensajes o registros de llamadas.</string>
+    <string name="privacy_guard_default_title">Privacidad</string>
+    <string name="privacy_guard_default_summary">Habilitar la privacidad por defecto para nuevas aplicaciones</string>
 </resources>

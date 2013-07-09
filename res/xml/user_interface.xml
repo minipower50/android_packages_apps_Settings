@@ -37,8 +37,15 @@
     </PreferenceScreen>
 
     <CheckBoxPreference
+        android:key="hide_usb_notification"
+        android:title="@string/hide_usb_notification_title"
+        android:disableDependentsState="true"
+        android:summary="@string/hide_usb_notification_summary" />
+
+    <CheckBoxPreference
         android:key="ums_notification_connect"
         android:title="@string/ums_notification_connect_title"
+        android:dependency="hide_usb_notification"
         android:summary="@string/ums_notification_connect_summary" />
 
    <PreferenceScreen

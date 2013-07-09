@@ -122,6 +122,27 @@
             android:title="@string/tablet_scaled_icons_title"
             android:summary="@string/tablet_scaled_icons_summary" />
 
+        <CheckBoxPreference
+            android:key="tablet_compat_button"
+            android:dependency="tablet_ui"
+            android:title="@string/tablet_compat_button_title"
+            android:summaryOn="@string/tablet_compat_button_summary_on"
+            android:summaryOff="@string/tablet_compat_button_summary_off" />
+
+        <com.android.settings.cyanogenmod.SeekBarPreference
+            android:key="tablet_notifications"
+            android:dependency="tablet_ui"
+            android:title="@string/tablet_notifications_title"
+            android:max="10"
+            android:defaultValue="5" />
+
+        <com.android.settings.cyanogenmod.SeekBarPreference
+            android:key="tablet_height"
+            android:dependency="tablet_ui"
+            android:title="@string/tablet_height_title"
+            android:max="120"
+            android:defaultValue="100" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

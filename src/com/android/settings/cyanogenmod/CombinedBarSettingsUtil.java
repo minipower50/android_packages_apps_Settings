@@ -39,6 +39,8 @@ public class CombinedBarSettingsUtil {
     public static final String BUTTON_AIRPLANE = "toggleAirplane";
     public static final String BUTTON_MEDIA = "toggleMedia";
     public static final String BUTTON_SLEEP = "toggleSleep";
+    public static final String BUTTON_LOCATION = "toggleLocation";
+    public static final String BUTTON_FLASHLIGHT = "toggleFlashlight";
 
     public static final HashMap<String, ButtonInfo> BUTTONS = new HashMap<String, ButtonInfo>();
     static {
@@ -72,6 +74,12 @@ public class CombinedBarSettingsUtil {
         BUTTONS.put(BUTTON_SLEEP, new CombinedBarSettingsUtil.ButtonInfo(
                 BUTTON_SLEEP, R.string.combined_bar_settings_sleep,
                 "com.android.systemui:drawable/stat_screen_timeout_on"));
+        BUTTONS.put(BUTTON_LOCATION, new CombinedBarSettingsUtil.ButtonInfo(
+                BUTTON_LOCATION, R.string.combined_bar_settings_location,
+                "com.android.systemui:drawable/ic_qs_gps_neutral"));
+        BUTTONS.put(BUTTON_FLASHLIGHT, new CombinedBarSettingsUtil.ButtonInfo(
+                BUTTON_FLASHLIGHT, R.string.combined_bar_settings_flashlight,
+                "com.android.systemui:drawable/ic_qs_torch_off"));
     }
 
     private static final String BUTTON_DELIMITER = "|";

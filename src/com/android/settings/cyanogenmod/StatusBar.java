@@ -18,6 +18,8 @@ package com.android.settings.cyanogenmod;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
@@ -47,6 +49,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String KEY_TABLET_FLIPPED = "tablet_flipped";
     private static final String KEY_TABLET_SCALED_ICONS = "tablet_scaled_icons";
     private static final String KEY_STATUS_BAR_LIGHTS_OUT = "status_bar_lights_out";
+    private static final String KEY_TABLET_COMPAT_BUTTON = "tablet_compat_button";
+    private static final String KEY_TABLET_NOTIFICATIONS = "tablet_notifications";
+    private static final String KEY_TABLET_HEIGHT = "tablet_height";
 
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
@@ -61,6 +66,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mStatusBarLightsOut;
     private CheckBoxPreference mStatusBarFullscreen;
     private SeekBarPreference mFullscreenTimeout;
+    private CheckBoxPreference mTabletCompatButton;
+    private SeekBarPreference mTabletNotifications;
+    private SeekBarPreference mTabletHeight;
 
     private Preference mClockColor;
     private Preference mBarColor;
@@ -68,6 +76,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     private ContentResolver mContentResolver;
     private Context mContext;
+    private Resources mSystemUiResources;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,7 +167,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             mPrefCategoryGeneral.removePreference(mStatusBarCmSignal);
         }
 
-        if (Utils.isTablet(getActivity())) {
+        if (mTabletUI.isChecked()) {
             mPrefCategoryGeneral.removePreference(mStatusBarBrightnessControl);
         }
 
@@ -180,6 +189,40 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 .getContentResolver(), Settings.System.FULLSCREEN_TIMEOUT, 0));
         mFullscreenTimeout.setOnPreferenceChangeListener(this);
         mFullscreenTimeout.setSummary(String.valueOf(mFullscreenTimeout.getDefault()));
+        mFullscreenTimeout.setPositiveButtonText("");
+        mFullscreenTimeout.setNegativeButtonText("");
+
+        mTabletCompatButton =
+                (CheckBoxPreference) prefSet.findPreference(KEY_TABLET_COMPAT_BUTTON);
+        mTabletCompatButton.setChecked(Settings.System.getInt(mContentResolver,
+                Settings.System.COMPAT_BUTTON, 1) == 1);
+
+        PackageManager pm = mContext.getPackageManager();
+        if (pm != null) {
+            try {
+                mSystemUiResources = pm.getResourcesForApplication("com.android.systemui");
+            } catch (Exception e) {
+                mSystemUiResources = null;
+            }
+        }
+
+        int count = getItemFromSystemUi("config_maxNotificationIcons", "integer");
+
+        mTabletNotifications = (SeekBarPreference) prefSet.findPreference(KEY_TABLET_NOTIFICATIONS);
+        mTabletNotifications.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.TABLET_NOTIFICATIONS, count));
+        mTabletNotifications.setOnPreferenceChangeListener(this);
+        mTabletNotifications.setSummary(String.valueOf(mTabletNotifications.getDefault()));
+        mTabletNotifications.setPositiveButtonText("");
+        mTabletNotifications.setNegativeButtonText("");
+
+        mTabletHeight = (SeekBarPreference) prefSet.findPreference(KEY_TABLET_HEIGHT);
+        mTabletHeight.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.TABLET_HEIGHT, 100));
+        mTabletHeight.setOnPreferenceChangeListener(this);
+        mTabletHeight.setSummary(String.valueOf(mTabletHeight.getDefault()));
+        mTabletHeight.setPositiveButtonText("");
+        mTabletHeight.setNegativeButtonText("");
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -208,6 +251,14 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int value = (Integer) newValue;
             Settings.System.putInt(mContentResolver, Settings.System.FULLSCREEN_TIMEOUT, value);
             mFullscreenTimeout.setSummary(String.valueOf(value));
+        } else if (preference == mTabletNotifications) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(mContentResolver, Settings.System.TABLET_NOTIFICATIONS, value);
+            mTabletNotifications.setSummary(String.valueOf(value));
+        } else if (preference == mTabletHeight) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(mContentResolver, Settings.System.TABLET_HEIGHT, value);
+            mTabletHeight.setSummary(String.valueOf(value));
         }
         return false;
     }
@@ -276,6 +327,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(mContentResolver, Settings.System.FULLSCREEN_MODE,
                     value ? 1 : 0);
             return true;
+        } else if (preference == mTabletCompatButton) {
+            value = mTabletCompatButton.isChecked();
+            Settings.System.putInt(mContentResolver, Settings.System.COMPAT_BUTTON,
+                    value ? 1 : 0);
+            return true;
         }
         return false;
     }
@@ -309,4 +365,22 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             public void colorUpdate(int color) {
             }
     };
+
+    private int getItemFromSystemUi(String name, String type) {
+        if (mSystemUiResources != null) {
+            int resId = (int) mSystemUiResources.getIdentifier(name, type, "com.android.systemui");
+            if (resId > 0) {
+                try {
+                    if (type.equals("dimen")) {
+                        return (int) mSystemUiResources.getDimension(resId);
+                    } else {
+                        return mSystemUiResources.getInteger(resId);
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+        return 0;
+    }
+
 }

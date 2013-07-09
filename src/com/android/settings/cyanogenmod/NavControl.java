@@ -39,22 +39,22 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
 
     private static final String NAVIGATION_BUTTON_COLOR = "navigation_button_color";
     private static final String KEY_NAVIGATION_CONTROLS = "navigation_controls";
-    private static final String COMBINED_BAR_NAVIGATION_FORCE_MENU =
-            "combined_bar_navigation_force_menu";
     private static final String NAVIGATION_BUTTON_GLOW_COLOR = "navigation_button_glow_color";
     private static final String NAVIGATION_BUTTON_GLOW_TIME =
             "navigation_button_glow_time";
     private static final String NAVIGATION_BAR_COLOR = "navigation_bar_color";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_NAVIGATION_ALIGNMENT = "nav_alignment";
+    private static final String KEY_NAVIGATION_HEIGHT = "navigation_height";
+    private static final String KEY_TABLET_BAR = "tablet_bar";
 
     private CheckBoxPreference mNavigationControls;
-    private CheckBoxPreference mCombinedBarNavigationForceMenu;
     private ListPreference mNavigationAlignment;
     private Preference mNavigationButtonColor;
     private Preference mNavigationButtonGlowColor;
     private SeekBarPreference mNavigationButtonGlowTime;
     private Preference mNavigationBarColor;
+    private SeekBarPreference mNavigationHeight;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -70,13 +70,7 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
         mContext = getActivity().getApplicationContext();
         mContentResolver = mContext.getContentResolver();
 
-        mCombinedBarNavigationForceMenu =
-                (CheckBoxPreference) prefSet.findPreference(COMBINED_BAR_NAVIGATION_FORCE_MENU);
-
         mNavigationControls = (CheckBoxPreference) findPreference(KEY_NAVIGATION_CONTROLS);
-
-        mCombinedBarNavigationForceMenu.setChecked((Settings.System.getInt(mContentResolver,
-                Settings.System.TABLET_FORCE_MENU, 0) == 1));
 
         mNavigationBarColor = (Preference) prefSet.findPreference(NAVIGATION_BAR_COLOR);
 
@@ -98,6 +92,17 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
         mNavigationButtonGlowTime.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
                 .getContentResolver(), Settings.System.NAVIGATION_BUTTON_GLOW_TIME, 500));
         mNavigationButtonGlowTime.setOnPreferenceChangeListener(this);
+        mNavigationButtonGlowTime.setPositiveButtonText("");
+        mNavigationButtonGlowTime.setNegativeButtonText("");
+
+        mNavigationHeight =
+                (SeekBarPreference) prefSet.findPreference(KEY_NAVIGATION_HEIGHT);
+        mNavigationHeight.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.NAVIGATION_HEIGHT, 100));
+        mNavigationHeight.setOnPreferenceChangeListener(this);
+        mNavigationHeight.setSummary(String.valueOf(mNavigationHeight.getDefault()));
+        mNavigationHeight.setPositiveButtonText("");
+        mNavigationHeight.setNegativeButtonText("");
 
         boolean tabletMode = Settings.System.getInt(mContentResolver,
                 Settings.System.TABLET_MODE, mContext.getResources().getBoolean(
@@ -108,11 +113,13 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
                 com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0) == 1);
 
         if (!tabletMode) {
-            prefSet.removePreference(mCombinedBarNavigationForceMenu);
+            Preference tabBar = findPreference(KEY_TABLET_BAR);
+            prefSet.removePreference(tabBar);
         } else {
             Preference naviBar = findPreference(KEY_NAVIGATION_BAR);
             prefSet.removePreference(naviBar);
             prefSet.removePreference(mNavigationAlignment);
+            prefSet.removePreference(mNavigationHeight);
         }
     }
 
@@ -123,11 +130,6 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
             value = mNavigationControls.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_CONTROLS,
                     value ? 1 : 0);
-            return true;
-        } else if (preference == mCombinedBarNavigationForceMenu) {
-            value = mCombinedBarNavigationForceMenu.isChecked();
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.TABLET_FORCE_MENU, value ? 1 : 0);
             return true;
         } else if (preference == mNavigationButtonColor) {
             ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
@@ -169,6 +171,10 @@ public class NavControl extends SettingsPreferenceFragment implements OnPreferen
             int value = (Integer) newValue;
             Settings.System.putInt(getContentResolver(),
                     Settings.System.NAVIGATION_BUTTON_GLOW_TIME, value);
+        } else if (preference == mNavigationHeight) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NAVIGATION_HEIGHT, value);
         }
         return true;
     }

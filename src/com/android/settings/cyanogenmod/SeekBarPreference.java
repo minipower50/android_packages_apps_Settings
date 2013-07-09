@@ -25,7 +25,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
   private Context mContext;
 
   private String mDialogMessage, mSuffix;
-  private int mDefault, mMax, mValue = 0;
+  private int mDefault, mMax, mTempValue, mValue = 0;
 
   public SeekBarPreference(Context context, AttributeSet attrs) { 
     super(context,attrs); 
@@ -35,7 +35,6 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     mSuffix = attrs.getAttributeValue(androidns,"text");
     mDefault = attrs.getAttributeIntValue(androidns,"defaultValue", 0);
     mMax = attrs.getAttributeIntValue(androidns,"max", 100);
-
   }
   @Override 
   protected View onCreateDialogView() {
@@ -88,12 +87,14 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
   {
     String t = String.valueOf(value);
     mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
-    if (shouldPersist())
-      persistInt(value);
-    callChangeListener(new Integer(value));
+    mTempValue = value;
   }
   public void onStartTrackingTouch(SeekBar seek) {}
-  public void onStopTrackingTouch(SeekBar seek) {}
+  public void onStopTrackingTouch(SeekBar seek) {
+    if (shouldPersist())
+        persistInt(mTempValue);
+    callChangeListener(new Integer(mTempValue));
+  }
 
   public void setMax(int max) { mMax = max; }
   public int getMax() { return mMax; }

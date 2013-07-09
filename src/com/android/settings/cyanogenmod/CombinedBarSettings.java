@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.ListFragment;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -117,28 +118,30 @@ public class CombinedBarSettings extends SettingsPreferenceFragment {
 
             // fill that checkbox map!
             for (CombinedBarSettingsUtil.ButtonInfo button : CombinedBarSettingsUtil.BUTTONS.values()) {
-                // create a checkbox
-                CheckBoxPreference cb = new CheckBoxPreference(getActivity()
-                        .getApplicationContext());
+                if (button.getId() != null) {
+                    // create a checkbox
+                    CheckBoxPreference cb = new CheckBoxPreference(getActivity()
+                            .getApplicationContext());
 
-                // set a dynamic key based on button id
-                cb.setKey(SELECT_BUTTON_KEY_PREFIX + button.getId());
+                    // set a dynamic key based on button id
+                    cb.setKey(SELECT_BUTTON_KEY_PREFIX + button.getId());
 
-                // set vanity info
-                cb.setTitle(button.getTitleResId());
+                    // set vanity info
+                    cb.setTitle(button.getTitleResId());
 
-                // set our checked state
-                if (buttonList.contains(button.getId())) {
-                    cb.setChecked(true);
-                } else {
-                    cb.setChecked(false);
+                    // set our checked state
+                    if (buttonList.contains(button.getId())) {
+                        cb.setChecked(true);
+                    } else {
+                        cb.setChecked(false);
+                    }
+
+                    // add to our prefs set
+                    mCheckBoxPrefs.put(cb, button.getId());
+
+                    // add to the category
+                    prefButtons.addPreference(cb);
                 }
-
-                // add to our prefs set
-                mCheckBoxPrefs.put(cb, button.getId());
-
-                // add to the category
-                prefButtons.addPreference(cb);
             }
         }
 
