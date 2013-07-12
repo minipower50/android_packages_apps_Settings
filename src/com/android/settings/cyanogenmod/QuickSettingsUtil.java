@@ -147,10 +147,10 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_WIFIAP, R.string.title_tile_wifiap,
                 "com.android.systemui:drawable/ic_qs_wifi_ap_neutral"));
-        TILES.put(TILE_APPDRAWER, new QuickSettingsUtil.TileInfo(
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_APPDRAWER, R.string.edge_swipe_app_drawer,
                 "com.android.systemui:drawable/ic_notify_quicksettings_normal"));
-        TILES.put(TILE_DAYDREAM, new QuickSettingsUtil.TileInfo(
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_DAYDREAM, R.string.screensaver_settings_title,
                 "com.android.systemui:drawable/ic_qs_clock_circle"));
     }
