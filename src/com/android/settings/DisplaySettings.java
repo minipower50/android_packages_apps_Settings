@@ -118,14 +118,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
 
-        final CheckBoxPreference lockScreenRotation =
-                (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ROTATION);
-        if (lockScreenRotation != null) {
-            if (!res.getBoolean(com.android.internal.R.bool.config_enableLockScreenRotation)) {
-                getPreferenceScreen().removePreference(lockScreenRotation);
-            }
-        }
-
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null) {
             if (!res.getBoolean(com.android.internal.R.bool.config_dreamsSupported)) {
@@ -207,10 +199,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         // We have a preference, lets update the summary
         StringBuilder summary = new StringBuilder();
-        Boolean rotationEnabled = Settings.System.getInt(getContentResolver(),
+        boolean rotationEnabled = Settings.System.getInt(getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION, 0) != 0;
+        boolean allowAllRotations = getResources().getBoolean(
+                com.android.internal.R.bool.config_allowAllRotations);
         int mode = Settings.System.getInt(getContentResolver(),
-                Settings.System.ACCELEROMETER_ROTATION_ANGLES,
+                Settings.System.ACCELEROMETER_ROTATION_ANGLES, allowAllRotations ?
+                DisplayRotation.ROTATION_0_MODE|DisplayRotation.ROTATION_90_MODE|DisplayRotation.ROTATION_180_MODE|DisplayRotation.ROTATION_270_MODE :
                 DisplayRotation.ROTATION_0_MODE|DisplayRotation.ROTATION_90_MODE|DisplayRotation.ROTATION_270_MODE);
 
         if (!rotationEnabled) {
