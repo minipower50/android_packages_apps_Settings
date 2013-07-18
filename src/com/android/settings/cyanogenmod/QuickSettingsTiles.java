@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -74,7 +75,11 @@ public class QuickSettingsTiles extends Fragment {
                 mSystemUiResources = null;
             }
         }
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         int panelWidth = getItemFromSystemUi("notification_panel_width", "dimen");
+        if (panelWidth > metrics.widthPixels) panelWidth = metrics.widthPixels;
         if (panelWidth != 0) {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(panelWidth,
                     FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER_HORIZONTAL);

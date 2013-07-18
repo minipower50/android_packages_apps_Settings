@@ -1118,6 +1118,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="pie_start_title">PIE trigger height</string>
     <string name="pie_distance_title">PIE trigger distance</string>
     <string name="pref_disable_bootanimation_title">Disable boot animation</string>
+    <string name="pref_disable_wallpaperservice_title">Disable wallpaper service</string>
+    <string name="pref_disable_wallpaperservice_summary">Disable wallpaper to reduce SystemUI memory usage (requires reboot)</string>
 
     <string name="drawer_transition_title">Drawer gesture animation</string>
     <string name="app_switch_transition_title">Quick app switch gesture animation</string>
