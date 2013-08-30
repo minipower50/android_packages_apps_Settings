@@ -37,6 +37,10 @@
     </PreferenceScreen>
 
     <CheckBoxPreference
+        android:key="launcher_menu"
+        android:title="@string/launcher_menu_title" />
+
+    <CheckBoxPreference
         android:key="hide_usb_notification"
         android:title="@string/hide_usb_notification_title"
         android:disableDependentsState="true"

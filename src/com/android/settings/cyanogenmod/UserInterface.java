@@ -38,11 +38,13 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String UMS_NOTIFICATION_CONNECT = "ums_notification_connect";
     private static final String LARGE_RECENT_THUMBS = "large_recent_thumbs";
     private static final String HIDE_USB_NOTIFICATION = "hide_usb_notification";
+    private static final String LAUNCHER_MENU = "launcher_menu";
 
     private ListPreference mDualPanePrefs;
     private CheckBoxPreference mUmsNotificationConnect;
     private CheckBoxPreference mLargeRecentThumbs;
     private CheckBoxPreference mHideUsbNotification;
+    private CheckBoxPreference mLauncherMenu;
 
     private Preference mRecentsColor;
 
@@ -97,6 +99,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mLcdDensity.setSummary(getResources().getString(R.string.lcd_density_current) + currentProperty);
 
+        mLauncherMenu = (CheckBoxPreference) prefSet.findPreference(LAUNCHER_MENU);
+
+        mLauncherMenu.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LAUNCHER_MENU, 1) == 1));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -138,6 +144,11 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         } else if (preference == mLcdDensity) {
             ((PreferenceActivity) getActivity())
                     .startPreferenceFragment(new DensityChanger(), true);
+            return true;
+        } else if (preference == mLauncherMenu) {
+            value = mLauncherMenu.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LAUNCHER_MENU, value ? 1 : 0);
             return true;
         }
         return false;

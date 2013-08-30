@@ -41,6 +41,7 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_PAUSE = "halo_pause";
     private static final String KEY_HALO_BUTTON_COLOR = "halo_button_color";
     private static final String KEY_HALO_PING_COLOR = "halo_ping_color";
+    private static final String KEY_HALO_GONE = "halo_gone";
 
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
@@ -49,6 +50,7 @@ public class Halo extends SettingsPreferenceFragment
     private CheckBoxPreference mHaloPause;
     private Preference mHaloButtonColor;
     private Preference mHaloPingColor;
+    private CheckBoxPreference mHaloGone;
 
     private Context mContext;
     private INotificationManager mNotificationManager;
@@ -85,7 +87,7 @@ public class Halo extends SettingsPreferenceFragment
         try {
             float haloSize = Settings.System.getFloat(mContext.getContentResolver(),
                     Settings.System.HALO_SIZE, 1.0f);
-            mHaloSize.setValue(String.valueOf(haloSize));  
+            mHaloSize.setValue(String.valueOf(haloSize));
         } catch(Exception ex) {
             // So what
         }
@@ -95,6 +97,10 @@ public class Halo extends SettingsPreferenceFragment
                 (Preference) prefSet.findPreference(KEY_HALO_BUTTON_COLOR);
         mHaloPingColor =
                 (Preference) prefSet.findPreference(KEY_HALO_PING_COLOR);
+
+        mHaloGone = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_GONE);
+        mHaloGone.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HALO_GONE, 0) == 1);
     }
 
     private boolean isHaloPolicyBlack() {
@@ -134,7 +140,11 @@ public class Halo extends SettingsPreferenceFragment
             cp.setDefaultColor(0xff33b5e5);
             cp.show();
             return true;
-        } 
+        } else if (preference == mHaloGone) {
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.HALO_GONE, mHaloGone.isChecked()
+                    ? 1 : 0);
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

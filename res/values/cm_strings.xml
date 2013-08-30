@@ -1166,5 +1166,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="halo_button_color_title">HALO button color</string>
     <string name="halo_text_bubble_color_title">HALO text bubble color</string>
     <string name="halo_ping_color_title">HALO ping color</string>
+    <string name="halo_gone_title">Remove HALO button from the notification drawer</string>
+
+    <string name="launcher_menu_title">Show menu button when in the launcher activity</string>
 
 </resources>
