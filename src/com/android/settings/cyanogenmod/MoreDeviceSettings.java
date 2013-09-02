@@ -18,14 +18,21 @@ package com.android.settings.cyanogenmod;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+
+import java.util.List;
 
 public class MoreDeviceSettings extends SettingsPreferenceFragment {
     private static final String TAG = "MoreDeviceSettings";
@@ -60,5 +67,29 @@ public class MoreDeviceSettings extends SettingsPreferenceFragment {
                 calibrationCategory.removePreference(findPreference(KEY_DISPLAY_GAMMA));
             }
         }
+
+        Preference advanced = findPreference("advanced_settings");
+        if (!isAdvanced(advanced)) {
+            getPreferenceScreen().removePreference(advanced);
+        }
+    }
+
+    private boolean isAdvanced(Preference preference) {
+        if (preference.getIntent() != null) {
+            // Find the activity that is in the system image
+            PackageManager pm = getActivity().getPackageManager();
+            List<ResolveInfo> list = pm.queryIntentActivities(preference.getIntent(), PackageManager.GET_META_DATA);
+            int listSize = list.size();
+            for (int i = 0; i < listSize; i++) {
+                ResolveInfo resolveInfo = list.get(i);
+                if ((resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)
+                        != 0) {
+                    return true;
+                }
+            }
+        }
+
+        // Did not find a matching activity, so remove the preference
+        return false;
     }
 }
