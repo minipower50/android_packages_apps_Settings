@@ -53,7 +53,6 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
     private Preference mLcdDensity;
     int newDensityValue;
-    DensityChanger densityFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
