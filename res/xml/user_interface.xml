@@ -36,6 +36,11 @@
         android:title="@string/recents_panel_color_title">
     </PreferenceScreen>
 
+    <PreferenceScreen
+        android:key="recents_ram_bar"
+        android:fragment="com.android.settings.cyanogenmod.RamBar"
+        android:title="@string/ram_bar" />
+
     <CheckBoxPreference
         android:key="launcher_menu"
         android:title="@string/launcher_menu_title" />

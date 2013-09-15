@@ -39,6 +39,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String LARGE_RECENT_THUMBS = "large_recent_thumbs";
     private static final String HIDE_USB_NOTIFICATION = "hide_usb_notification";
     private static final String LAUNCHER_MENU = "launcher_menu";
+    private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
 
     private ListPreference mDualPanePrefs;
     private CheckBoxPreference mUmsNotificationConnect;
@@ -47,6 +48,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private CheckBoxPreference mLauncherMenu;
 
     private Preference mRecentsColor;
+    private Preference mRamBar;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -104,6 +106,24 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mLauncherMenu.setChecked((Settings.System.getInt(mContentResolver,
                 Settings.System.LAUNCHER_MENU, 1) == 1));
+
+        mRamBar = findPreference(KEY_RECENTS_RAM_BAR);
+        updateRamBar();
+    }
+
+    private void updateRamBar() {
+        int ramBarMode = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.RECENTS_RAM_BAR_MODE, 0);
+        if (ramBarMode != 0)
+            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_enabled));
+        else
+            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_disabled));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRamBar();
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -145,6 +165,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         } else if (preference == mLcdDensity) {
             ((PreferenceActivity) getActivity())
                     .startPreferenceFragment(new DensityChanger(), true);
+            return true;
+        } else if (preference == mRamBar) {
+            ((PreferenceActivity) getActivity())
+                    .startPreferenceFragment(new RamBar(), true);
             return true;
         } else if (preference == mLauncherMenu) {
             value = mLauncherMenu.isChecked();

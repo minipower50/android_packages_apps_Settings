@@ -1174,4 +1174,21 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="selinux_enable_title">Security Enhanced Android</string>
     <string name="selinux_enable_warning">You are about to enable SEAndroid, an advanced security mechanism, on your device.\n\nThis option exists for debugging purposes only, and it is very likely that your device isn\'t fully ready for it, which may cause parts (or all) of your hardware to block or hang.\n\nAre you sure you want to proceed?</string>
 
+    <!-- Recents Ram Bar -->
+    <string name="ram_bar">Recents RAM bar</string>
+    <string name="ram_bar_note_title">Note</string>
+    <string name="ram_bar_note_summary">This RAM bar shows the actual memory (RAM) utilization. Please note that having cached apps helps to open apps faster.</string>
+    <string name="ram_bar_mode_title">Recents RAM bar mode</string>
+    <string name="ram_bar_mode_dialog_title">Show on recents RAM bar</string>
+    <string name="ram_bar_none">None</string>
+    <string name="ram_bar_apps">Applications</string>
+    <string name="ram_bar_cache">Applications and cache</string>
+    <string name="ram_bar_other">Applications, cache and other</string>
+    <string name="ram_bar_style_cat">Recents RAM bar style</string>
+    <string name="ram_bar_color_app_mem_color">Applications RAM color</string>
+    <string name="ram_bar_color_cache_mem_color">Cache RAM color</string>
+    <string name="ram_bar_color_total_mem_color">Other RAM color</string>
+    <string name="ram_bar_color_enabled">Enabled</string>
+    <string name="ram_bar_color_disabled">Disabled</string>
+
 </resources>
