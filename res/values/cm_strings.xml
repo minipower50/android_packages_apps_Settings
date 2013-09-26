@@ -163,7 +163,6 @@
     <string name="lockscreen_target_title">Slider shortcuts</string>
     <string name="lockscreen_target_summary">View or change custom lock screen shortcuts</string>
     <string name="lockscreen_target_reset">Lock screen shortcuts reset to default</string>
-    <string name="lockscreen_target_save">Lock screen shortcuts saved</string>
     <string name="lockscreen_target_reset_title">Reset</string>
     <string name="lockscreen_target_reset_message">Delete all user created lock screen shortcuts and restore to default?</string>
     <string name="lockscreen_target_empty">Empty</string>
@@ -555,7 +554,7 @@
     <string name="power_menu_title">Power menu</string>
     <string name="power_menu_reboot_title">Reboot menu</string>
     <string name="power_menu_screenshot_title">Screenshot</string>
-    <string name="power_menu_expanded_desktop">Expanded desktop</string>
+    <string name="power_menu_expanded_desktop">Expanded desktop mode</string>
     <string name="expanded_desktop_disabled">Disabled</string>
     <string name="expanded_desktop_status_bar">Status bar visible</string>
     <string name="expanded_desktop_no_status_bar">Status bar hidden</string>
@@ -660,6 +659,7 @@
     <string name="title_tile_quiet_hours">Quiet hours</string>
     <string name="title_tile_volume">Volume</string>
     <string name="title_tile_expanded_desktop">Expanded desktop</string>
+    <string name="title_tile_network_adb">ADB over network</string>
 
     <string name="title_dynamic_tiles">Dynamic tiles</string>
     <string name="dynamic_tiles_note_title">Note</string>
@@ -817,7 +817,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="navigation_ring_title">Quick launch shortcuts</string>
     <string name="navring_target_reset_message">Delete all user created navigation bar shortcuts and restore to default?</string>
     <string name="navring_target_reset">Navigation bar shortcuts reset to default</string>
-    <string name="navring_target_save">Navigation bar shortcuts saved</string>
     <string name="navring_action_open_ime_switcher">Open IME Switcher</string>
     <string name="navring_action_kill_app">Kill app</string>
     <string name="navring_action_none">None</string>
@@ -916,7 +915,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="privacy_guard_filter_does_not_match">No apps with relevant permissions are installed</string>
     <string name="privacy_guard_help_title">Help</string>
     <string name="privacy_guard_reset_title">Reset</string>
-    <string name="privacy_guard_help_text">In this screen you can choose for which apps Privacy Guard should be active by simply tapping on them. Selected apps will not be able to access your personal data, such as contacts, messages or call logs. Long pressing on an entry opens the app details screen for that app.\n\nBy default built-in apps are not shown. If you want to show them or filter apps to show only the ones requesting access to personal data by their permissions, select the respective options in the menu.</string>
+    <string name="privacy_guard_help_text">In this screen you can choose for which apps Privacy Guard should be active by simply tapping on them. Selected apps will not be able to access your personal data, such as contacts, messages or call logs. Long pressing on an entry opens the app details screen for that app.\n\nBy default built-in apps are not shown. If you want to show them, select the respective option in the menu.</string>
     <string name="privacy_guard_manager_show_system_apps">Show built-in apps</string>
     <string name="privacy_guard_manager_filter_permissions">Permission filter</string>
 
