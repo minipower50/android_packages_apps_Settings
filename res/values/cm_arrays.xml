@@ -410,6 +410,7 @@
         <item>@string/hardware_keys_action_search</item>
         <item>@string/hardware_keys_action_voice_search</item>
         <item>@string/hardware_keys_action_in_app_search</item>
+        <item>@string/hardware_keys_action_launch_camera</item>
     </string-array>
 
     <string-array name="hardware_keys_action_values" translatable="false">
@@ -419,6 +420,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string-array name="lockscreen_long_key_press_entries" translatable="false">
@@ -606,6 +608,11 @@
 
     <string-array name="blacklist_policy_private_values" translatable="false">
         <item>1</item>
+    </string-array>
+
+    <!-- Gamma calibration descriptors, deliberately empty as string values populated via
+    per-device overlay. Required to build on non-hardware tunable devices -->
+    <string-array name="gamma_descriptors">
     </string-array>
 
     <!-- Dual Pane Prefs -->
