@@ -1196,4 +1196,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="ram_bar_color_enabled">Enabled</string>
     <string name="ram_bar_color_disabled">Disabled</string>
 
+    <string name="clock_size">Clock font size</string>
+
 </resources>

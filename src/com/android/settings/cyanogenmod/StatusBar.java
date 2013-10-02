@@ -54,6 +54,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String KEY_TABLET_COMPAT_BUTTON = "tablet_compat_button";
     private static final String KEY_TABLET_NOTIFICATIONS = "tablet_notifications";
     private static final String KEY_TABLET_HEIGHT = "tablet_height";
+    private static final String KEY_CLOCK_SIZE = "clock_size";
+
 
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
@@ -71,6 +73,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mTabletCompatButton;
     private SeekBarPreference mTabletNotifications;
     private SeekBarPreference mTabletHeight;
+    private SeekBarPreference mClockSize;
 
     private Preference mClockColor;
     private Preference mBarColor;
@@ -220,6 +223,14 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mTabletHeight.setSummary(String.valueOf(mTabletHeight.getDefault()));
         mTabletHeight.setPositiveButtonText("");
         mTabletHeight.setNegativeButtonText("");
+
+        mClockSize = (SeekBarPreference) prefSet.findPreference(KEY_CLOCK_SIZE);
+        mClockSize.setDefault(Settings.System.getInt(getActivity().getApplicationContext()
+                .getContentResolver(), Settings.System.CLOCK_SIZE, 0));
+        mClockSize.setOnPreferenceChangeListener(this);
+        mClockSize.setSummary(String.valueOf(mClockSize.getDefault()));
+        mClockSize.setPositiveButtonText("");
+        mClockSize.setNegativeButtonText("");
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -256,6 +267,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int value = (Integer) newValue;
             Settings.System.putInt(mContentResolver, Settings.System.TABLET_HEIGHT, value);
             mTabletHeight.setSummary(String.valueOf(value));
+        } else if (preference == mClockSize) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(mContentResolver, Settings.System.CLOCK_SIZE, value);
+            mClockSize.setSummary(String.valueOf(value));
         }
         return false;
     }
