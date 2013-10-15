@@ -110,16 +110,16 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         mScreenTimeoutMode.setOnPreferenceChangeListener(this);
 
         // Remove unsupported options
-        if (!QSUtils.deviceSupportsDockBattery(getActivity()) && findPreference(Settings.System.QS_DYNAMIC_DOCK_BATTERY) != null) {
+        if (!QSUtils.deviceSupportsDockBattery(getActivity())) {
             mDynamicTiles.removePreference(findPreference(Settings.System.QS_DYNAMIC_DOCK_BATTERY));
         }
-        if (!QSUtils.deviceSupportsImeSwitcher(getActivity()) && findPreference(Settings.System.QS_DYNAMIC_IME) != null) {
+        if (!QSUtils.deviceSupportsImeSwitcher(getActivity())) {
             mDynamicTiles.removePreference(findPreference(Settings.System.QS_DYNAMIC_IME));
         }
-        if (!QSUtils.deviceSupportsUsbTether(getActivity()) && findPreference(Settings.System.QS_DYNAMIC_USBTETHER) != null) {
+        if (!QSUtils.deviceSupportsUsbTether(getActivity())) {
             mDynamicTiles.removePreference(findPreference(Settings.System.QS_DYNAMIC_USBTETHER));
         }
-        if (!QSUtils.deviceSupportsWifiDisplay(getActivity()) && findPreference(Settings.System.QS_DYNAMIC_WIFI) != null) {
+        if (!QSUtils.deviceSupportsWifiDisplay(getActivity())) {
             mDynamicTiles.removePreference(findPreference(Settings.System.QS_DYNAMIC_WIFI));
         }
 
