@@ -308,7 +308,8 @@ public final class WifiDisplaySettings extends SettingsPreferenceFragment {
                     mAvailableDevicesCategory.addPreference(createWifiDisplayPreference(d, false, true));
                 }
             }
-            if (mWifiDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_SCANNING) {
+            if (mWifiDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_SCANNING ||
+                    mRemoteDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_SCANNING) {
                 mAvailableDevicesCategory.setProgress(true);
             } else {
                 mAvailableDevicesCategory.setProgress(false);
