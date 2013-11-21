@@ -1175,7 +1175,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="app_ops_show_system_apps">Show built-in apps</string>
     <string name="app_ops_reset_counters">Reset allow/deny counters</string>
     <string name="app_ops_reset_confirm_title">Confirm counters reset</string>
-    <string name="app_ops_reset_confirm_mesg">Are you sure you wish to reset AppOps counters ?</string>
+    <string name="app_ops_reset_confirm_mesg">Are you sure you wish to reset AppOps counters?</string>
 
     <!-- Label for are-notifications-enabled checkbox in app details [CHAR LIMIT=20] -->
     <string name="app_halo_label_black">Blacklist from HALO</string>
