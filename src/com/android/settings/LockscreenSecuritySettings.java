@@ -55,6 +55,7 @@ public class LockscreenSecuritySettings extends RestrictedSettingsFragment
     private static final int SET_OR_CHANGE_LOCK_METHOD_REQUEST = 123;
     private static final int CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_IMPROVE_REQUEST = 124;
     private static final int CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_LIVELINESS_OFF = 125;
+    private static final String LOCK_NUMPAD_RANDOM = "lock_numpad_random";
 
     private PackageManager mPM;
     private DevicePolicyManager mDPM;
@@ -69,6 +70,8 @@ public class LockscreenSecuritySettings extends RestrictedSettingsFragment
     private CheckBoxPreference mVisibleDots;
 
     private CheckBoxPreference mPowerButtonInstantlyLocks;
+
+    private ListPreference mLockNumpadRandom;
 
     public LockscreenSecuritySettings() {
         super(null /* Don't ask for restrictions pin on creation. */);
@@ -126,6 +129,16 @@ public class LockscreenSecuritySettings extends RestrictedSettingsFragment
         }
         addPreferencesFromResource(resid);
         root = getPreferenceScreen();
+
+        // Lock Numpad Random
+        mLockNumpadRandom = (ListPreference) root.findPreference(LOCK_NUMPAD_RANDOM);
+        if (mLockNumpadRandom != null) {
+            mLockNumpadRandom.setValue(String.valueOf(
+                    Settings.Secure.getInt(getContentResolver(),
+                    Settings.Secure.LOCK_NUMPAD_RANDOM, 0)));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry());
+            mLockNumpadRandom.setOnPreferenceChangeListener(this);
+        }
 
         // lock after preference
         mLockAfter = (ListPreference) root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
@@ -358,6 +371,12 @@ public class LockscreenSecuritySettings extends RestrictedSettingsFragment
                 Log.e("SecuritySettings", "could not persist lockAfter timeout setting", e);
             }
             updateLockAfterPreferenceSummary();
+        } else if (preference == mLockNumpadRandom) {
+            Settings.Secure.putInt(getContentResolver(),
+                    Settings.Secure.LOCK_NUMPAD_RANDOM,
+                    Integer.valueOf((String) value));
+            mLockNumpadRandom.setValue(String.valueOf(value));
+            mLockNumpadRandom.setSummary(mLockNumpadRandom.getEntry());
         }
         return true;
     }
