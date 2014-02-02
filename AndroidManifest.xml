@@ -753,6 +753,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="SettingsCMLicenseActivity"
+                android:label="@string/settings_cmlicense_activity_title"
+                android:theme="@android:style/Theme.Holo.Panel"
+                android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.settings.CMLICENSE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="SettingsSafetyLegalActivity"
                 android:label="@string/settings_safetylegal_activity_title"
                 android:theme="@*android:style/Theme.Holo.Dialog.Alert">
@@ -1930,6 +1940,13 @@
             android:exported="false"
             android:name=".cyanogenmod.LtoService">
         </service>
+
+        <!-- Disable MultiSIM settings if not available. -->
+        <receiver android:name=".deviceinfo.msim.DisableMSimReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>

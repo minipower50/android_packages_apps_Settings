@@ -15,7 +15,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="volume_adjust_sounds_enable_title">Garso reguliavimo skambesys</string>
-    <string name="volume_adjust_sounds_enable_summary"> Naudojant telefono garso mygtukus skambėti kai reguliuojamas garso lygis</string>
+    <string name="volume_adjust_sounds_enable_summary"> Naudojant telefono garso mygtukus skambėti, kai reguliuojamas garso lygis</string>
     <string name="root_access">Prieiga prie root</string>
     <string name="root_access_warning_title">Leisti root prieigą?</string>
     <string name="root_access_warning_message">Leisti programoms prašyti root prieigos yra labai pavojinga ir tai gali pakenkti jūsų sistemos saugumui!</string>
@@ -42,7 +42,7 @@
     <string name="notification_convert_sound_to_vibration_title">Vibruoti perspėjimus</string>
     <string name="notification_convert_sound_to_vibration_summary">Vibracijos režime visi perspėjimai bus vibruojami nepriklausomai nuo atskirų programų nustatymų</string>
     <string name="notification_vibrate_during_calls_title">Įspėti vibracija pokalbio metu</string>
-    <string name="notification_vibrate_during_calls_summary">Pokalbio metu apie gaunamus pranešimus būsite informuotas vibracija</string>
+    <string name="notification_vibrate_during_calls_summary">Pokalbio metu apie gaunamus perspėjimus būsite informuotas vibracija</string>
     <string name="device_hostname">Įrenginio vardas tinkle</string>
     <string name="mod_version">CyanogenMod versija</string>
     <string name="mod_version_default">Nežinoma</string>
@@ -50,14 +50,14 @@
     <string name="cpu_info">Procesorius</string>
     <string name="mem_info">Atmintis</string>
     <string name="anonymous_statistics_title">CyanogenMod statistika</string>
-    <string name="anonymous_statistics_summary">Padėkite tobulinti CyanogenMod įjungdami statistikos siuntimą</string>
+    <string name="anonymous_statistics_summary">Padėkite tobulinti CyanogenMod įjungdami statistikos raportavimą</string>
     <string name="anonymous_statistics_warning_title">Apie</string>
-    <string name="anonymous_statistics_warning">Dalinantis CyanogenMod Statistika nebus renkama Jūsų asmeninė informacija, o tik sistemos darbas bei klaidos. Ši informacija padės kūrėjams tobulinti CyanogenMod bei šalinti klaidas.</string>
+    <string name="anonymous_statistics_warning">Raportuojant CyanogenMod statistika nebus renkama Jūsų asmeninė informacija, o tik sistemos darbas bei klaidos. Ši informacija padės kūrėjams tobulinti CyanogenMod bei šalinti klaidas.</string>
     <string name="enable_reporting_title">Įjungti raportavimą</string>
     <string name="preview_data_title">Žiūrėti duomenis</string>
     <string name="view_stats_title">Žiūrėti statistiką</string>
     <string name="anonymous_learn_more">Sužinokite daugiau</string>
-    <string name="anonymous_notification_desc">Įjunkite ar išjunkite CyanogenMod Statistiką</string>
+    <string name="anonymous_notification_desc">Įjunkite ar išjunkite CyanogenMod statistiką</string>
     <string name="preview_id_title">Unikalus ID</string>
     <string name="preview_device_title">Įrenginys</string>
     <string name="preview_version_title">Versija</string>
@@ -69,7 +69,7 @@
     <string name="system_interface_title">Sistemos sąsaja</string>
     <string name="notification_drawer_title">Užuolaida</string>
     <string name="notification_drawer_collapse_on_dismiss_title">Automatinio uždarymo elgesys</string>
-    <string name="collapse_on_dismiss_never">Išjungta</string>
+    <string name="collapse_on_dismiss_never">Išjungti</string>
     <string name="collapse_on_dismiss_if_empty">Jei nė vieno nebeliko</string>
     <string name="collapse_on_dismiss_if_no_clearable">Jei nebėra like nuimamųjų</string>
     <string name="collapse_on_dismiss_never_summary">Palikti atidarytą pašalinus įspėjimus</string>
@@ -168,7 +168,7 @@
     <string name="unlock_camera_unlock_title">Atrakinti su kameros mygtuku</string>
     <string name="unlock_camera_unlock_summary">Spaudžiant kameros mygtuką atrakinamas įrenginys</string>
     <string name="unlock_quick_unlock_control_title">Greitas atrakinimas</string>
-    <string name="unlock_quick_unlock_control_summary">Automatiškai atrakinti kai suvedamas teisingas PIN/slaptažodis</string>
+    <string name="unlock_quick_unlock_control_summary">Automatiškai atrakinti, kai suvedamas teisingas PIN/slaptažodis</string>
     <string name="delay_and_timeout_title">Užrakinimo delsimas</string>
     <string name="slide_lock_delay_title">Ekrano užrakto delsimas</string>
     <string name="slide_lock_timeout_delay_title">Delsti</string>
@@ -306,14 +306,14 @@
     <string name="pulse_speed_slow">Lėtas</string>
     <string name="pulse_speed_very_slow">Labai lėtas</string>
     <string name="battery_light_title">Baterijos indikatorius</string>
-    <string name="battery_low_pulse_title">Pulsuoti kai baterija senka</string>
+    <string name="battery_low_pulse_title">Pulsuoti, kai baterija senka</string>
     <string name="battery_light_list_title">Spalvos</string>
     <string name="battery_light_low_color_title">Baterija senka</string>
     <string name="battery_light_medium_color_title">Įkraunama</string>
     <string name="battery_light_full_color_title">Pilnai įkrauta</string>
     <string name="volume_overlay_title">Garso panelės stilius</string>
     <string name="volbtn_music_controls_title">Garso svirtimi valdyti muziką</string>
-    <string name="volbtn_music_controls_summary">Išjungus ekraną, ilgai spaudžiant svirtį bus keičiami kūriniai</string>
+    <string name="volbtn_music_controls_summary">Išjungus ekraną, ilgai spaudžiant garso svirtį bus keičiami kūriniai</string>
     <string name="volume_ring_only_description">Melodija</string>
     <string name="ring_mode_title">Skambėjimo režimas</string>
     <string name="ring_mode_normal">Normalus</string>
@@ -346,7 +346,7 @@
     <string name="camera_wake_title">Kameros mygtukas pažadina</string>
     <string name="camera_wake_summary">Paspaudus kameros mygtuką prietaisas pabus</string>
     <string name="camera_sleep_on_release_title">Ekranas</string>
-    <string name="camera_sleep_on_release_summary">Išlaikyti ekraną įjungtą tik tada kai mygtukas nuspaustas</string>
+    <string name="camera_sleep_on_release_summary">Išlaikyti ekraną įjungtą tik tada, kai mygtukas nuspaustas</string>
     <string name="camera_music_controls_title">Grojimo kontrolė</string>
     <string name="camera_music_controls_summary">Užgesus ekranui ilgas kameros klavišo pa
 spaudimas įjungs/sustabdys atkuriamą įrašą</string>
@@ -382,8 +382,8 @@ spaudimas įjungs/sustabdys atkuriamą įrašą</string>
     <string name="power_menu_title">Išjungimo meniu</string>
     <string name="power_menu_reboot_title">Perkrovimo meniu</string>
     <string name="power_menu_screenshot_title">Ekranvaizdis</string>
-    <string name="power_menu_expanded_desktop">Išplėstinis ekranas</string>
-    <string name="expanded_desktop_disabled">Išjungta</string>
+    <string name="power_menu_expanded_desktop">Išplėstinis darbastalis</string>
+    <string name="expanded_desktop_disabled">Išjungtas</string>
     <string name="expanded_desktop_status_bar">Būsenos juosta matoma</string>
     <string name="expanded_desktop_no_status_bar">Būsenos juosta paslėpta</string>
     <string name="power_menu_profiles_title">Perjungti profilį</string>
@@ -426,10 +426,10 @@ spaudimas įjungs/sustabdys atkuriamą įrašą</string>
     <string name="adb_over_network_warning">DĖMESIO: Kai ADB veikia per tinklą, prie Jūsų įrenginio gali prisijungti bet kas, taip pat ir per GSM duomenų tinklą!\n\nNaudokite tai tik patikimuose tinkluose.\n\nAr tikrai įjungti?</string>
     <string name="lockscreen_buttons_title">Mygtukų veiksmai</string>
     <string name="lockscreen_buttons_summary">Žiūrėti ar keisti ekrano užrakto mygtukų veiksmus</string>
-    <string name="lockscreen_long_press_back_title">Ilgai spaudžiant Atgal</string>
-    <string name="lockscreen_long_press_home_title">Ilgai spaudžiant Namai</string>
-    <string name="lockscreen_long_press_menu_title">Ilgai spaudžiant Meniu</string>
-    <string name="lockscreen_buttons_no_action">Nieko</string>
+    <string name="lockscreen_long_press_back_title">Ilgai spaudžiant atgal mygtuką</string>
+    <string name="lockscreen_long_press_home_title">Ilgai spaudžiant namų mygtuką</string>
+    <string name="lockscreen_long_press_menu_title">Ilgai spaudžiant meniu mygtuką</string>
+    <string name="lockscreen_buttons_no_action">Nieko nedaryti</string>
     <string name="lockscreen_buttons_flashlight">Žibintuvėlis</string>
     <string name="lockscreen_buttons_next">Kitas kūrinys</string>
     <string name="lockscreen_buttons_previous">Ankstesnis kūrinys</string>
@@ -496,14 +496,14 @@ spaudimas įjungs/sustabdys atkuriamą įrašą</string>
     <string name="pref_wifi_disable_hdcp_summary">Pabandykite jei Jūs prisijungiate bet nesiunčiami duomenys</string>
     <string name="app_security_title">Programėlės apsauga</string>
     <string name="sms_security_check_limit_title">SMS žinučių limitas</string>
-    <string name="sms_security_check_limit_summary">Rodyti įspėjimą kai programėlė nori siųsti daug SMS. Dabartinis limitas: %d žinučių, kas 15 minučių</string>
+    <string name="sms_security_check_limit_summary">Rodyti įspėjimą, kai programėlė nori siųsti daug SMS. Dabartinis limitas: %d žinučių, kas 15 minučių</string>
     <string name="sms_security_check_limit_default">30 (Numatytas)</string>
     <string name="lock_clock_title">Laikrodžio valdiklis</string>
     <string name="lock_clock_summary">Žiūrėti ar keisti kaip \'cLock\' laikrodis rodomas Darbalaukyje bei Ekrano užrakte</string>
     <string name="stylus_icon_enabled_title">Rodyti rašiklio piktogramą</string>
-    <string name="stylus_icon_enabled_summary">Rodyti piktogramą kai naudojamas rašiklis</string>
+    <string name="stylus_icon_enabled_summary">Rodyti piktogramą, kai naudojamas rašiklis</string>
     <string name="lockscreen_maximize_widgets_title">Didinti valdiklius</string>
-    <string name="lockscreen_maximize_widgets_summary">Roditi padidintus valdiklius ir sumažintą atrakinimą kai įrenginys pažadinamas</string>
+    <string name="lockscreen_maximize_widgets_summary">Roditi padidintus valdiklius ir sumažintą atrakinimą, kai įrenginys pažadinamas</string>
     <string name="lockscreen_enable_widgets_title">Valdiklių segtuvas</string>
     <string name="lockscreen_enable_widgets_summary">Leisti, kad būtų pridėti ir pasirinkti keli valdiklių puslapiai</string>
     <string name="lockscreen_enable_camera_title">Kameros valdiklis</string>
@@ -518,7 +518,7 @@ spaudimas įjungs/sustabdys atkuriamą įrašą</string>
     <string name="lockscreen_background_custom_image">Pasirinktinis vaizdas</string>
     <string name="lockscreen_background_default_wallpaper">Numatytasis tapetas</string>
     <string name="headset_connect_player_title">Įjungti muzikos programėlę prijungus</string>
-    <string name="headset_connect_player_summary">Įjungti numatytąją muzikos programą kai prijungiama laisvų rankų įranga</string>
+    <string name="headset_connect_player_summary">Įjungti numatytąją muzikos programą, kai prijungiama laisvų rankų įranga</string>
     <string name="safe_headset_volume_title">Saugus laisvų rankų įrangos garsas</string>
     <string name="cyanogenmod_waiver_title">Atsisakymas</string>
     <string name="cyanogenmod_waiver_body">Pakeitus šį parametrą, gali būti šalies įstatymų pažeidimas.\n\nPaspaudus \'Gerai\', jūs patvirtinate, kad sutinkate su šia sąlyga</string>
@@ -580,8 +580,8 @@ Ryškumo kreivė apskaičiuojama atliekant kubinę \'spline\' interpoliaciją d�
     <string name="power_notifications_ringtone_silent">Tylus</string>
     <string name="screen_off_animation_title">Ekrano išjungimo animacija</string>
     <string name="screen_off_animation_summary">Rodyti elektronų pluošto animaciją, kai ekranas yra išjungiamas</string>
-    <string name="wake_when_plugged_or_unplugged_title">Pabusti kai prijungiama</string>
-    <string name="wake_when_plugged_or_unplugged_summary">Įjungti ekraną kai prijungiamas ar atjungiamas įkroviklis</string>
+    <string name="wake_when_plugged_or_unplugged_title">Pabusti, kai prijungiama</string>
+    <string name="wake_when_plugged_or_unplugged_summary">Įjungti ekraną, kai prijungiamas ar atjungiamas įkroviklis</string>
     <string name="confirm_delete_apn">APN bus ištrintas.</string>
     <string name="privacy_guard_switch_label">Įjungti privatumo apsaugą</string>
     <string name="privacy_guard_dlg_title">Įjungti privatumo apsaugą?</string>
@@ -606,9 +606,9 @@ ite parodyti jas, pasirinkite atitinkamą meniu parinktį.</string>
     <string name="blacklist_edit_dialog_title">Redaguoti juodojo sąrašo įrašą</string>
     <string name="blacklist_prefs">Nustatymai</string>
     <string name="blacklist_button_delete">Ištrinti</string>
-    <string name="blacklist_empty_text">Jūs neturite jokių numerių įtrauktų į juodajį sąrašą. Pridėkite įrašą paliesdami (+) mygtuką.</string>
+    <string name="blacklist_empty_text">Jūs neturite jokių numerių įtrauktų į juodajį sąrašą. Įtraukite numerį paliesdami (+) mygtuką.</string>
     <string name="blacklist_disabled_empty_text">Norint įtraukti skambučius ar žinutes iš tam tikrų numerių įjunkite juodajį sąrašą.</string>
-    <string name="blacklist_summary_disabled">Išjungta</string>
+    <string name="blacklist_summary_disabled">Išjungtas</string>
     <string name="blacklist_summary">Įeinantys skambučiai ir žinutės iš telefonų numerių kurie yra juodajame sąraše bus blokuojami</string>
     <string name="blacklist_notify">Rodyti įspėjimą</string>
     <string name="blacklist_private_numbers_title">Privatūs numeriai</string>
@@ -643,22 +643,22 @@ ite parodyti jas, pasirinkite atitinkamą meniu parinktį.</string>
     <string name="backlight_timeout_title">Apšvietimo delsimas</string>
     <string name="backlight_timeout_unlimited">Neišjungiamas</string>
     <plurals name="backlight_timeout_time">
-        <item quantity="one"><xliff:g id="seconds">%d</xliff:g> sekundė</item>
-        <item quantity="other"><xliff:g id="seconds">%d</xliff:g> sekundės</item>
+        <item quantity="one"><xliff:g id="seconds">%d</xliff:g> sek.</item>
+        <item quantity="other"><xliff:g id="seconds">%d</xliff:g> sek.</item>
     </plurals>
-    <string name="backlight_summary_disabled">Išjungta</string>
-    <string name="backlight_summary_enabled_with_timeout">Įjungta dėl <xliff:g id="timeout">%s</xliff:g></string>
-    <string name="backlight_summary_enabled">Įjungta</string>
+    <string name="backlight_summary_disabled">Išjungtas</string>
+    <string name="backlight_summary_enabled_with_timeout">Delsti <xliff:g id="timeout">%s</xliff:g></string>
+    <string name="backlight_summary_enabled">Įjungtas</string>
     <string name="gamma_tuning_title_head">Gama kalibravimas</string>
     <string name="gamma_tuning_summary_head">Reguliuoti gama reikšmes</string>
     <string name="gamma_tuning_control_set_header">Grupė <xliff:g id="index">%d</xliff:g></string>
     <string name="gamma_tuning_contrast">Kontrastas</string>
     <string name="gamma_tuning_brightness">Ryškumas</string>
     <string name="gamma_tuning_saturation">Saturacija</string>
-    <string name="more_device_controls_title">Daugiau...\u2026</string>
+    <string name="more_device_controls_title">Daugiau\u2026</string>
     <string name="more_device_settings_title">Kiti prietaiso pasirinkimai</string>
     <string name="sensors_motors_title">Jutikliai ir varikliai</string>
-    <string name="display_calibration_title">Rodyti kalibravimą</string>
+    <string name="display_calibration_title">Ekrano kalibravimas</string>
     <string name="category_quick_access">Sparčiosios prieigos juosta</string>
     <string name="title_quick_access">Rodyti stalčiuje</string>
     <string name="title_quick_access_linked">Susijęs išdėstymas</string>
@@ -667,8 +667,8 @@ ite parodyti jas, pasirinkite atitinkamą meniu parinktį.</string>
     <string name="selinux_enable_title">Padidintas Android saugumas</string>
     <string name="selinux_enable_warning">Jūs ketinate leisti SEAndroid, pažangų saugumo mechanizmą savo prietaise.\n\nŠi galimybė egzistuoja tik dėl derinimo tikslų, yra labai tikėtina jog jūsų prietaisas yra ne visiškai pasiruošes tam, o tai gali sukelti dalis (arba visa jūsų aparatinę įrangą) "pakibti".\n\nAr tikrai norite tęsti?</string>
     <string name="gps_download_data_wifi_only">Parsisiųsti GPS pagalbinius duomenis tik per Wi-Fi tinklus</string>
-    <string name="app_ops_allowed">Suteiktieji</string>
-    <string name="app_ops_ignored">Atmestieji</string>
+    <string name="app_ops_allowed">Leidžiami</string>
+    <string name="app_ops_ignored">Ignoruojami</string>
     <string name="app_ops_summaries_wifi_change">wifi kaita</string>
     <string name="app_ops_labels_wifi_change">Wi-Fi kaita</string>
     <string name="app_ops_summaries_bluetooth_change">bluetooth kaita</string>
@@ -705,4 +705,88 @@ ite parodyti jas, pasirinkite atitinkamą meniu parinktį.</string>
     <string name="wifi_ibss_freq_title">Kanalas/Dažnis</string>
     <string name="wifi_channel">Kanalas</string>
     <string name="wifi_mhz">MHz</string>
+    <string name="intent_sender_data_label"><xliff:g id="data">Duomenys:</xliff:g></string>
+    <string name="bluetooth_enter_pin_msg_hs">Suporuoti su:<xliff:g id="bold">&lt;br>&lt;b></xliff:g><xliff:g id="device_name">%1$s</xliff:g><xliff:g id="end_bold">&lt;/b>&lt;br>&lt;br></xliff:g>Įveskite reikiamą įrenginio PIN kodą (16 arba daugiau skaitmenų):</string>
+    <string name="bluetooth_profile_sap">SIM prieiga</string>
+    <string name="bluetooth_profile_dun">Belaidžio tinklo prieiga</string>
+    <string name="bluetooth_sap_profile_summary_connected">Prisijungta prie SIM prieigos serverio</string>
+    <string name="bluetooth_dun_profile_summary_connected">Prisijungta prie DUN serverio</string>
+    <string name="bluetooth_sap_profile_summary_use_for">Naudoti SIM prieigai</string>
+    <string name="bluetooth_dun_profile_summary_use_for">Naudoti belaidžio tinklo prieigai</string>
+    <string name="wifi_disabled_association_rejected">Asociacija atmesta </string>
+    <string name="sim_absent">Nėra SIM/RUIM</string>
+    <string name="sim_pin_change_failed_enable_sim_lock">Įjungti SIM/RUIM užraktą prieš keičiant PIN kodą</string>
+    <string name="sim_enable_disable_lock_not_supported">SIM/RUIM užraktas nepalaikomas</string>
+    <string name="sim_pin_attempts">\nLikę bandymai:</string>
+    <string name="sim_pin_enabled">PIN kodas įjungtas</string>
+    <string name="sim_pin_disabled">PIN kodas išjungtas</string>
+    <string name="device_additional_status_summary">Telefono numeris, signalas, IMEI ir kt.</string>
+    <string name="device_additional_status">Papildomo statuso informacija</string>
+    <string name="data_usage_tab_slot">SIM</string>
+    <string name="sel_sub_title">Konfigūruoti prenumeratas</string>
+    <string name="sel_sub_summary">Pasirinkite prenumeratą (PREN. 1, 2 ir kt.)</string>
+    <string name="select_subscription">Pasirinkite prenumeratą</string>
+    <string name="subs_settings">Prenumeratos statusas</string>
+    <string name="multi_sim_settings_title">Multi-SIM nustatymai</string>
+    <string name="multi_sim_settings_summary">Multi-SIM balso, SMS pranešimų ir duomenų nustatymai</string>
+    <string name="voice_title">Balsas/USSD/MMI</string>
+    <string name="voice_summary">Pasirinkite prenumeratą dėl balso skambučio</string>
+    <string name="data_title">Duomenų ryšys</string>
+    <string name="data_summary">Pasirinkite prenumeratą dėl duomenų ryšio</string>
+    <string name="sms_title">SMS pranešimai</string>
+    <string name="sms_summary">Pasirinkite prenumeratą dėl siunčiamų SMS pranešimų</string>
+    <string name="set_data_subscription_progress">Prenumeratos nustatymų duomenys</string>
+    <string name="set_dds_success">Prenumeratos duomenys nustatyti</string>
+    <string name="set_dds_failed">Nepavyko nustatyti prenumeratos duomenų. Pašalinkite bet kokį esamą duomenų ryšį ir bandykite dar kartą.</string>
+    <string name="set_dds_error">Nepavyko nustatyti prenumeratos duomenų</string>
+    <string name="set_sms_error">Nepavyko nustatyti SMS pranešimų prenumeratos, prenumerata neaktyvi</string>
+    <string name="set_voice_error">Nepavyko nustatyti balso prenumeratos, prenumerata neaktyvi</string>
+    <string name="set_priority_sub_error">Nepavyko nustatyti prioritetinės prenumeratos, prenumerata neaktyvi</string>
+    <string name="prompt">Raginimas</string>
+    <string name="prompt_user">Greitas vartotojas</string>
+    <string name="tune_away_title">TuneAway</string>
+    <string name="tune_away_Default">Išjungta</string>
+    <string name="tune_away_enabled">TuneAway įjungta!</string>
+    <string name="tune_away_disabled">TuneAway išjungta!</string>
+    <string name="priority_sub_title">Prenumeratos prioritetas</string>
+    <string name="priority_sub_summary">Pasirinkite prenumeratos prioritetą</string>
+    <string name="label_global_roaming_settings">Tarptinklinio ryšio nustatymai</string>
+    <string name="pie_control_title">Pie kontrolė</string>
+    <string name="pie_control_enabled">Išjungta, kai išplėstas darbastalis yra įjungtas</string>
+    <string name="pie_control_disabled">Išjungta</string>
+    <string name="pie_control_sensitivity_title">Atsakomumas</string>
+    <string name="pie_control_sensitivity_low">Žemas</string>
+    <string name="pie_control_sensitivity_medium">Vidutinis</string>
+    <string name="pie_control_sensitivity_high">Aukštas</string>
+    <string name="pie_control_sensitivity_very_high">Labai aukštas</string>
+    <string name="pie_control_size">Navigacijos mygtuko dydis</string>
+    <string name="pie_control_trigger_positions">Įjungti pozicijas</string>
+    <string name="pie_control_trigger_left">Kairys ekrano kraštas</string>
+    <string name="pie_control_trigger_bottom">Apatinis ekranos kraštas</string>
+    <string name="pie_control_trigger_right">Dešinys ekrano kraštas</string>
+    <string name="pie_control_trigger_top">Viršutinis ekranos kraštas</string>
+    <string name="pie_control_trigger_top_summary">Tik navigacija bus rodoma viršuje</string>
+    <string name="gestures_settings_title">Stylus gestai</string>
+    <string name="category_spen_title">Stylus gestai</string>
+    <string name="enable_subcat_title">Stylus</string>
+    <string name="enable_spen_title_head">Įjungti gestus</string>
+    <string name="enable_spen_summary_head">Naudoti braukiamuosius gestus laikant stylus mygtuką</string>
+    <string name="gestures_subcat_title">Gestai</string>
+    <string name="gestures_left_spen_title_head">Braukti į kairę</string>
+    <string name="gestures_right_spen_title_head">Braukti į dešinę</string>
+    <string name="gestures_up_spen_title_head">Braukti į viršų</string>
+    <string name="gestures_down_spen_title_head">Braukti į apačią</string>
+    <string name="gestures_long_spen_title_head">Ilgas paspaudimas</string>
+    <string name="gestures_double_spen_title_head">Dvigubas paspaudimas</string>
+    <string name="gestures_action_empty">Jokio veiksmo</string>
+    <string name="gestures_action_home">Namai</string>
+    <string name="gestures_action_back">Atgal</string>
+    <string name="gestures_action_menu">Meniu</string>
+    <string name="gestures_action_search">Remtis paieška</string>
+    <string name="gestures_action_recent">Naujausios programos</string>
+    <string name="stylus_app_not_installed">%s neįdiegta</string>
+    <string name="whisperpush_title">WhisperPush</string>
+    <string name="whisperpush_registration_title">Registruotis</string>
+    <string name="whisperpush_registration_summary">WhisperPush registracija, norint įjunkti šifruotus SMS.</string>
+    <string name="whisperpush_identitykey_title">Peržiūrėti tapatybės raktus</string>
 </resources>
