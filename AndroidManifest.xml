@@ -1893,11 +1893,7 @@
 
         <activity android:name=".cyanogenmod.LockscreenInterface" />
 
-        <activity android:name=".cyanogenmod.NotificationDrawer" />
-
-        <activity android:name=".cyanogenmod.MoreDeviceSettings" />
-
-        <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
+         <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
         <activity android:name="Settings$BlacklistSettingsActivity"
                 android:theme="@style/Theme.DialogWhenLarge"
                 android:uiOptions="splitActionBarWhenNarrow"
