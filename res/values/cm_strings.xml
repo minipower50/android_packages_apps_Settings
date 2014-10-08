@@ -1270,11 +1270,4 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="enable_adb_cm">Android debugging</string>
     <!-- Setting checkbox summary for Whether to enable Android debugging support on the phone -->
     <string name="enable_adb_summary_cm">Enable the Android Debug Bridge (adb) interface</string>
-
-    <!-- Lockscreen pin shuffle -->
-    <string name="lock_numpad_random_title">Change the order of PIN pad numbers</string>
-    <string name="lock_numpad_random_dialog_title">PIN pad random order</string>
-    <string name="lock_numpad_random_off">Disabled</string>
-    <string name="lock_numpad_random_always">Always</string>
-    <string name="lock_numpad_random_on_request">On request</string>
 </resources>
