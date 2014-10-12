@@ -314,8 +314,9 @@
     <string name="lockscreen_maximize_widgets_summary">Expand widgets when the screen is turned on</string>
     <string name="lockscreen_enable_camera_title">Camera widget</string>
 
-    <!-- Safe headset volume restore checkbox -->
+    <!-- Safe headset volume checkboxes -->
     <string name="safe_headset_volume_title">Safe headset volume</string>
+    <string name="safe_headset_volume_restore_title">Reduce headset volume on connection</string>
 
     <!-- Waiver -->
     <string name="cyanogenmod_waiver_title">Waiver</string>
@@ -401,6 +402,10 @@
     <string name="cm_sound_mode_vibrate">Vibrate</string>
     <string name="cm_sound_mode_sound">Sound</string>
     <string name="cm_sound_mode_soundVibrate">Sound &amp; Vibrate</string>
+    <string name="pref_location_mode_title">Location modes</string>
+    <string name="cm_location_mode_battery_saving">Battery saving</string>
+    <string name="cm_location_mode_device_only">Device only</string>
+    <string name="cm_location_mode_high_accuracy">High accuracy</string>
 
     <!-- Reset tiles -->
     <string name="tiles_reset_title">Reset</string>
