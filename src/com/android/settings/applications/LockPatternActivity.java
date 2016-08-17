@@ -17,6 +17,7 @@
 package com.android.settings.applications;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -42,6 +43,10 @@ import java.util.List;
 public class LockPatternActivity extends Activity implements OnNotifyAccountReset {
     public static final String PATTERN_LOCK_PROTECTED_APPS = "pattern_lock_protected_apps";
     public static final String RECREATE_PATTERN = "recreate_pattern_lock";
+    public static final String ACTION_BROADCAST_RESULT = "com.android.settings.applications.LockPatternActivity.ACTION_BROADCAST_RESULT";
+
+    // used for incoming and outgoing broadcast intents
+    public static final String EXTRA_BROADCAST_RESULT = "broadcast_result";
 
     private static final int MIN_PATTERN_SIZE = 4;
     private static final int MAX_PATTERN_RETRY = 5;
@@ -61,7 +66,9 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
     int mRetry = 0;
 
     boolean mCreate;
+    boolean mRetryPattern = true;
     boolean mConfirming = false;
+    boolean mBroadcastResult = false;
 
     Runnable mCancelPatternRunnable = new Runnable() {
         public void run() {
@@ -75,6 +82,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
                 } else {
                     mPatternLockHeader.setText(getResources()
                             .getString(R.string.lockpattern_recording_intro_header));
+                    mCancel.setText(getResources().getString(R.string.cancel));
                 }
             } else {
                 mPatternLockHeader.setText(getResources()
@@ -86,8 +94,15 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
     View.OnClickListener mCancelOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (mCreate && !mConfirming && !mRetryPattern) {
+                // Retry
+                mRetryPattern = true;
+                resetPatternState(true);
+                return;
+            }
             setResult(RESULT_CANCELED);
             finish();
+            maybeSendBroadcast(false);
         }
     };
 
@@ -106,6 +121,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
                 finish();
             } else {
                 mConfirming = true;
+                mCancel.setText(getResources().getString(R.string.cancel));
                 mLockPatternView.clearPattern();
 
                 mPatternLockHeader.setText(getResources().getString(
@@ -152,7 +168,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
 
     private void switchToPattern(boolean reset) {
         if (reset) {
-            resetPatternState();
+            resetPatternState(false);
         }
         mPatternLockHeader.setText(getResources()
                 .getString(R.string.lockpattern_settings_enable_summary));
@@ -174,6 +190,10 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patternlock);
 
+        if (getIntent() != null) {
+            mBroadcastResult = getIntent().getBooleanExtra(EXTRA_BROADCAST_RESULT, false);
+        }
+
         mPatternLockHeader = (TextView) findViewById(R.id.pattern_lock_header);
         mCancel = (Button) findViewById(R.id.pattern_lock_btn_cancel);
         mCancel.setOnClickListener(mCancelOnClickListener);
@@ -184,7 +204,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
         mAccountView.setOnNotifyAccountResetCb(this);
         mLockPatternView = (LockPatternView) findViewById(R.id.lock_pattern_view);
 
-        resetPatternState();
+        resetPatternState(false);
 
         //Setup Pattern Lock View
         mLockPatternView.setSaveEnabled(false);
@@ -193,10 +213,19 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
 
     }
 
-    private void resetPatternState() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!isFinishing()) {
+            maybeSendBroadcast(false);
+        }
+    }
+
+    private void resetPatternState(boolean clear) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String pattern = prefs.getString(PATTERN_LOCK_PROTECTED_APPS, null);
-        mCreate = pattern == null || RECREATE_PATTERN.equals(getIntent().getAction());
+        mCreate = pattern == null || RECREATE_PATTERN.equals(getIntent().getAction())
+                || clear;
 
         mPatternHash = null;
         if (pattern != null) {
@@ -205,6 +234,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
 
         mContinue.setEnabled(!mCreate);
         mCancel.setVisibility(mCreate ? View.VISIBLE : View.GONE);
+        mCancel.setText(getResources().getString(R.string.cancel));
         mContinue.setVisibility(mCreate ? View.VISIBLE : View.GONE);
         mPatternLockHeader.setText(mCreate
                 ? getResources().getString(R.string.lockpattern_recording_intro_header)
@@ -212,6 +242,14 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
         mLockPatternView.clearPattern();
 
         invalidateOptionsMenu();
+    }
+
+    private void maybeSendBroadcast(boolean result) {
+        if (mBroadcastResult) {
+            Intent broadcastResult = new Intent(ACTION_BROADCAST_RESULT);
+            broadcastResult.putExtra(EXTRA_BROADCAST_RESULT, result);
+            sendBroadcast(broadcastResult);
+        }
     }
 
     private class UnlockPatternListener implements LockPatternView.OnPatternListener {
@@ -237,6 +275,9 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
 
                     mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
                     mLockPatternView.postDelayed(mCancelPatternRunnable, PATTERN_CLEAR_TIMEOUT_MS);
+                    mCancel.setText(getResources()
+                            .getString(R.string.lockpattern_retry_button_text));
+                    mRetryPattern = false;
                     return;
                 }
 
@@ -258,6 +299,10 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
                     }
                 } else {
                     //Save pattern, user needs to redraw to confirm
+                    mCancel.setText(getResources()
+                            .getString(R.string.lockpattern_retry_button_text));
+                    mRetryPattern = false;
+
                     mPatternHash = patternToHash(pattern);
 
                     mPatternLockHeader.setText(getResources().getString(
@@ -269,6 +314,7 @@ public class LockPatternActivity extends Activity implements OnNotifyAccountRese
                 if (Arrays.equals(mPatternHash, patternToHash(pattern))) {
                     setResult(RESULT_OK);
                     finish();
+                    maybeSendBroadcast(true);
                 } else {
                     mRetry++;
                     mPatternLockHeader.setText(getResources().getString(
